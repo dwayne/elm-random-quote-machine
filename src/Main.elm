@@ -4,10 +4,12 @@ module Main exposing (main)
 import Browser
 import Html exposing (Html, a, blockquote, button, cite, div, footer, i, p, span, text)
 import Html.Attributes exposing (class, href, target)
+import Html.Events exposing (onClick)
+import Random
 import Url.Builder exposing (crossOrigin, string)
 
 
-main : Program () Model msg
+main : Program () Model Msg
 main =
   Browser.element
     { init = init
@@ -36,7 +38,7 @@ init : () -> (Model, Cmd msg)
 init _ =
   let
     quotes =
-      [ currentQuote
+      [ defaultQuote
       , { content = " Transferring your passion to your job is far easier than finding a job that happens to match your passion."
         , author = "Seth Godin"
         }
@@ -50,25 +52,39 @@ init _ =
         , author = "James Clear"
         }
       ]
-
-    currentQuote =
-      { content = "I am not a product of my circumstances. I am a product of my decisions."
-      , author = "Stephen Covey"
-      }
   in
-    ( Model quotes currentQuote
+    ( Model quotes defaultQuote
     , Cmd.none
     )
+
+
+defaultQuote : Quote
+defaultQuote =
+  { content = "I am not a product of my circumstances. I am a product of my decisions."
+  , author = "Stephen Covey"
+  }
 
 
 -- UPDATE
 
 
-update : msg -> Model -> (Model, Cmd msg)
-update _ model =
-  ( model
-  , Cmd.none
-  )
+type Msg
+  = ClickedNewQuote
+  | NewQuote Quote
+
+
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model =
+  case msg of
+    ClickedNewQuote ->
+      ( model
+      , Random.generate NewQuote (Random.uniform defaultQuote model.quotes)
+      )
+
+    NewQuote quote ->
+      ( { model | currentQuote = quote }
+      , Cmd.none
+      )
 
 
 -- SUBSCRIPTIONS
@@ -82,7 +98,7 @@ subscriptions _ =
 -- VIEW
 
 
-view : Model -> Html msg
+view : Model -> Html Msg
 view { currentQuote } =
   div []
     [ viewQuote currentQuote
@@ -90,7 +106,7 @@ view { currentQuote } =
     ]
 
 
-viewQuote : Quote -> Html msg
+viewQuote : Quote -> Html Msg
 viewQuote quote =
   div [ class "mb15 quote" ]
       [ blockquote [ class "m0 mb30" ]
@@ -109,7 +125,9 @@ viewQuote quote =
           , div []
               [ viewIconButton "tumblr" (tumblrUrl quote) ]
           , div [ class "push-right" ]
-              [ button [ class "button" ] [ text "New quote" ] ]
+              [ button [ class "button", onClick ClickedNewQuote ]
+                  [ text "New quote" ]
+              ]
           ]
       ]
 
