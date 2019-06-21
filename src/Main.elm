@@ -5,6 +5,8 @@ import Browser
 import Html exposing (Html, a, blockquote, button, cite, div, footer, i, p, span, text)
 import Html.Attributes exposing (class, href, target)
 import Html.Events exposing (onClick)
+import Http
+import Json.Decode as D
 import Random
 import Url.Builder exposing (crossOrigin, string)
 
@@ -34,35 +36,11 @@ type alias Quote =
   }
 
 
-init : () -> (Model, Cmd msg)
+init : () -> (Model, Cmd Msg)
 init _ =
-  let
-    quotes =
-      [ defaultQuote
-      , { content = " Transferring your passion to your job is far easier than finding a job that happens to match your passion."
-        , author = "Seth Godin"
-        }
-      , { content = "Less mental clutter means more mental resources available for deep thinking."
-        , author = "Cal Newport"
-        }
-      , { content = "How much time he saves who does not look to see what his neighbor says or does or thinks."
-        , author = "Marcus Aurelius"
-        }
-      , { content = "You do not rise to the level of your goals. You fall to the level of your systems."
-        , author = "James Clear"
-        }
-      ]
-  in
-    ( Model quotes defaultQuote
-    , Cmd.none
-    )
-
-
-defaultQuote : Quote
-defaultQuote =
-  { content = "I am not a product of my circumstances. I am a product of my decisions."
-  , author = "Stephen Covey"
-  }
+  ( Model [] defaultQuote
+  , getQuotes
+  )
 
 
 -- UPDATE
@@ -71,6 +49,7 @@ defaultQuote =
 type Msg
   = ClickedNewQuote
   | NewQuote Quote
+  | GotQuotes (Result Http.Error (List Quote))
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -85,6 +64,43 @@ update msg model =
       ( { model | currentQuote = quote }
       , Cmd.none
       )
+
+    GotQuotes (Ok remoteQuotes) ->
+      ( { model | quotes = remoteQuotes }
+      , Cmd.none
+      )
+
+    GotQuotes (Err _) ->
+      ( { model | quotes = localQuotes }
+      , Cmd.none
+      )
+
+
+-- COMMANDS
+
+
+getQuotes : Cmd Msg
+getQuotes =
+  Http.get
+    { url = "https://gist.githubusercontent.com/dwayne/ff832ab1d4a0bf81585870369f984ebc/raw/46d874a29e9efe38006ec9865ad67b054ef312a8/quotes.json"
+      -- ^ TODO: Pass the URL via a flag.
+    , expect = Http.expectJson GotQuotes quotesDecoder
+    }
+
+
+-- DECODERS
+
+
+quotesDecoder : D.Decoder (List Quote)
+quotesDecoder =
+  D.field "quotes" (D.list quoteDecoder)
+
+
+quoteDecoder : D.Decoder Quote
+quoteDecoder =
+  D.map2 Quote
+    (D.field "content" D.string)
+    (D.field "author" D.string)
 
 
 -- SUBSCRIPTIONS
@@ -172,3 +188,31 @@ tumblrUrl { content, author } =
     , string "caption" author
     , string "canonicalUrl" "https://www.tumblr.com/docs/en/share_button"
     ]
+
+
+-- DATA
+
+
+defaultQuote : Quote
+defaultQuote =
+  { content = "I am not a product of my circumstances. I am a product of my decisions."
+  , author = "Stephen Covey"
+  }
+
+
+localQuotes : List Quote
+localQuotes =
+  [ defaultQuote
+  , { content = " Transferring your passion to your job is far easier than finding a job that happens to match your passion."
+    , author = "Seth Godin"
+    }
+  , { content = "Less mental clutter means more mental resources available for deep thinking."
+    , author = "Cal Newport"
+    }
+  , { content = "How much time he saves who does not look to see what his neighbor says or does or thinks."
+    , author = "Marcus Aurelius"
+    }
+  , { content = "You do not rise to the level of your goals. You fall to the level of your systems."
+    , author = "James Clear"
+    }
+  ]
