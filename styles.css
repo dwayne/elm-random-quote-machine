@@ -51,9 +51,19 @@ body {
   justify-content: center;
 }
 
+/* Transitions */
+
+.has-color-transition {
+  transition: color 2s;
+}
+
+.has-background-color-transition {
+  transition: background-color 2s;
+}
+
 /* Custom */
 
-body {
+.default-background-color {
   background-color: #333;
 }
 
@@ -63,6 +73,7 @@ body {
 
   border-radius: 3px;
 
+  color: #333;
   background-color: #fff;
 }
 
