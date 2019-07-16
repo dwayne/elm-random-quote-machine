@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,500");
+
+/* General */
+
+body {
+  margin: 0;
+  height: 100vh;
+
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+}
+
+/* Background */
+
+.background {
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #333;
+}
+
+/* Quote box */
+
+.quote-box {
+  width: 450px;
+  padding: 40px 50px;
+
+  border-radius: 3px;
+
+  color: #333;
+  background-color: #fff;
+}
+
+.quote-box__blockquote {
+  margin: 0 0 30px 0;
+}
+
+.quote-box__quote-wrapper {
+  margin-top: 0;
+
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.quote-box__quote-wrapper .quote-left {
+  margin-right: 12px;
+}
+
+.quote-box__author-wrapper {
+  text-align: right;
+}
+
+.quote-box__author-wrapper .author {
+  font-style: italic;
+}
+
+.quote-box__actions {
+  display: flex;
+}
+
+.quote-box__actions .button {
+  height: 30px;
+
+  padding-left: 15px;
+  padding-right: 15px;
+
+  border: 0;
+  border-radius: 3px;
+
+  cursor: pointer;
+
+  color: #fff;
+  background-color: #333;
+}
+
+.quote-box__actions .icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 30px;
+
+  border-radius: 3px;
+
+  text-decoration: none;
+
+  color: #fff;
+  background-color: #333;
+}
+
+.quote-box__actions .button:hover,
+.quote-box__actions .icon-button:hover {
+  opacity: 0.9;
+}
+
+.quote-box__actions > div:first-child {
+  margin-right: 10px;
+}
+
+.quote-box__actions > div:last-child {
+  margin-left: auto;
+}
+
+/* Attribution */
+
+.attribution {
+  margin-top: 15px;
+
+  text-align: center;
+  font-size: 0.8rem;
+
+  color: #fff;
+}
+
+.attribution__link {
+  text-decoration: none;
+  font-weight: 500;
+
+  color: #fff;
+}
