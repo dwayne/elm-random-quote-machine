@@ -85,3 +85,13 @@ And it doesn't recover unless you refresh the page.
 
 - https://english.stackexchange.com/q/28601
 - https://www.thepunctuationguide.com/em-dash.html
+
+## Use em dash in place of tilde in tweet
+
+Use
+
+https://twitter.com/intent/tweet?hashtags=quotes&text=%22I%20am%20not%20a%20product%20of%20my%20circumstances.%20I%20am%20a%20product%20of%20my%20decisions.%22%20%E2%80%94%20Stephen%20Covey
+
+instead of
+
+https://twitter.com/intent/tweet?hashtags=quotes&text=%22I%20am%20not%20a%20product%20of%20my%20circumstances.%20I%20am%20a%20product%20of%20my%20decisions.%22%20~%20Stephen%20Covey
