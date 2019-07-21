@@ -1,15 +1,42 @@
 module Main exposing (main)
 
 
+import Browser
 import Html exposing (Html, a, blockquote, button, cite, div, footer, i, p, span, text)
 import Html.Attributes exposing (autofocus, class, href, target, type_)
 import Url.Builder exposing (crossOrigin, string)
+
+
+main : Program () Model msg
+main =
+  Browser.element
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = always Sub.none
+    }
+
+
+-- MODEL
+
+
+type alias Model =
+  { quote : Quote
+  }
 
 
 type alias Quote =
   { content : String
   , author : String
   }
+
+
+init : () -> (Model, Cmd msg)
+init _ =
+  ( { quote = defaultQuote
+    }
+  , Cmd.none
+  )
 
 
 defaultQuote : Quote
@@ -19,11 +46,24 @@ defaultQuote =
   }
 
 
-main : Html msg
-main =
+-- UPDATE
+
+
+update : msg -> Model -> (Model, Cmd msg)
+update _ model =
+  ( model
+  , Cmd.none
+  )
+
+
+-- VIEW
+
+
+view : Model -> Html msg
+view { quote } =
   div [ class "background" ]
     [ div []
-        [ viewQuoteBox defaultQuote
+        [ viewQuoteBox quote
         , footer [ class "attribution" ]
             [ text "by "
             , a [ href "https://github.com/dwayne/"
