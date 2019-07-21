@@ -3,7 +3,7 @@ module Main exposing (main)
 
 import Browser
 import Html exposing (Html, a, blockquote, button, cite, div, footer, i, p, span, text)
-import Html.Attributes exposing (autofocus, class, href, target, type_)
+import Html.Attributes exposing (autofocus, class, href, style, target, type_)
 import Html.Events exposing (onClick)
 import Random
 import Url.Builder exposing (crossOrigin, string)
@@ -25,6 +25,7 @@ main =
 type alias Model =
   { quote : Quote
   , quotes : List Quote
+  , color : Color
   }
 
 
@@ -34,10 +35,14 @@ type alias Quote =
   }
 
 
+type alias Color = String
+
+
 init : () -> (Model, Cmd msg)
 init _ =
   ( { quote = defaultQuote
     , quotes = allQuotes
+    , color = defaultColor
     }
   , Cmd.none
   )
@@ -68,12 +73,34 @@ allQuotes =
   ]
 
 
+defaultColor : Color
+defaultColor =
+  "#333"
+
+
+allColors : List Color
+allColors =
+  [ "#16a085"
+  , "#27ae60"
+  , "#2c3e50"
+  , "#f39c12"
+  , "#e74c3c"
+  , "#9b59b6"
+  , "#fb6964"
+  , "#342224"
+  , "#472e32"
+  , "#bdbb99"
+  , "#77b1a9"
+  , "#73a857"
+  ]
+
+
 -- UPDATE
 
 
 type Msg
   = ClickedNewQuote
-  | NewQuote Quote
+  | NewQuoteAndColor (Quote, Color)
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -81,11 +108,14 @@ update msg model =
   case msg of
     ClickedNewQuote ->
       ( model
-      , Random.generate NewQuote (Random.uniform defaultQuote model.quotes)
+      , Random.generate NewQuoteAndColor <|
+          Random.pair
+            (Random.uniform defaultQuote model.quotes)
+            (Random.uniform defaultColor allColors)
       )
 
-    NewQuote newQuote ->
-      ( { model | quote = newQuote }
+    NewQuoteAndColor (newQuote, newColor) ->
+      ( { model | quote = newQuote, color = newColor }
       , Cmd.none
       )
 
@@ -94,10 +124,13 @@ update msg model =
 
 
 view : Model -> Html Msg
-view { quote } =
-  div [ class "background" ]
+view { quote, color } =
+  div
+    [ class "background"
+    , style "background-color" color
+    ]
     [ div []
-        [ viewQuoteBox quote
+        [ viewQuoteBox quote color
         , footer [ class "attribution" ]
             [ text "by "
             , a [ href "https://github.com/dwayne/"
@@ -110,20 +143,24 @@ view { quote } =
     ]
 
 
-viewQuoteBox : Quote -> Html Msg
-viewQuoteBox quote =
-  div [ class "quote-box" ]
+viewQuoteBox : Quote -> Color -> Html Msg
+viewQuoteBox quote color =
+  div
+    [ class "quote-box"
+    , style "color" color
+    ]
     [ viewQuote quote
     , div [ class "quote-box__actions" ]
         [ div []
-            [ viewIconButton "twitter" (twitterUrl quote) ]
+            [ viewIconButton "twitter" (twitterUrl quote) color ]
         , div []
-            [ viewIconButton "tumblr" (tumblrUrl quote) ]
+            [ viewIconButton "tumblr" (tumblrUrl quote) color ]
         , div []
             [ button
                 [ type_ "button"
                 , autofocus True
                 , class "button"
+                , style "background-color" color
                 , onClick ClickedNewQuote
                 ]
                 [ text "New quote" ]
@@ -171,10 +208,11 @@ tumblrUrl { content, author } =
     ]
 
 
-viewIconButton : String -> String -> Html msg
-viewIconButton name url =
+viewIconButton : String -> String -> Color -> Html msg
+viewIconButton name url color =
   a [ href url
     , target "_blank"
     , class "icon-button"
+    , style "background-color" color
     ]
     [ i [ class ("fa fa-" ++ name) ] [] ]
