@@ -4,10 +4,12 @@ module Main exposing (main)
 import Browser
 import Html exposing (Html, a, blockquote, button, cite, div, footer, i, p, span, text)
 import Html.Attributes exposing (autofocus, class, href, target, type_)
+import Html.Events exposing (onClick)
+import Random
 import Url.Builder exposing (crossOrigin, string)
 
 
-main : Program () Model msg
+main : Program () Model Msg
 main =
   Browser.element
     { init = init
@@ -22,6 +24,7 @@ main =
 
 type alias Model =
   { quote : Quote
+  , quotes : List Quote
   }
 
 
@@ -34,6 +37,7 @@ type alias Quote =
 init : () -> (Model, Cmd msg)
 init _ =
   ( { quote = defaultQuote
+    , quotes = allQuotes
     }
   , Cmd.none
   )
@@ -46,20 +50,50 @@ defaultQuote =
   }
 
 
+allQuotes : List Quote
+allQuotes =
+  [ defaultQuote
+  , { content = " Transferring your passion to your job is far easier than finding a job that happens to match your passion."
+    , author = "Seth Godin"
+    }
+  , { content = "Less mental clutter means more mental resources available for deep thinking."
+    , author = "Cal Newport"
+    }
+  , { content = "How much time he saves who does not look to see what his neighbor says or does or thinks."
+    , author = "Marcus Aurelius"
+    }
+  , { content = "You do not rise to the level of your goals. You fall to the level of your systems."
+    , author = "James Clear"
+    }
+  ]
+
+
 -- UPDATE
 
 
-update : msg -> Model -> (Model, Cmd msg)
-update _ model =
-  ( model
-  , Cmd.none
-  )
+type Msg
+  = ClickedNewQuote
+  | NewQuote Quote
+
+
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model =
+  case msg of
+    ClickedNewQuote ->
+      ( model
+      , Random.generate NewQuote (Random.uniform defaultQuote model.quotes)
+      )
+
+    NewQuote newQuote ->
+      ( { model | quote = newQuote }
+      , Cmd.none
+      )
 
 
 -- VIEW
 
 
-view : Model -> Html msg
+view : Model -> Html Msg
 view { quote } =
   div [ class "background" ]
     [ div []
@@ -76,7 +110,7 @@ view { quote } =
     ]
 
 
-viewQuoteBox : Quote -> Html msg
+viewQuoteBox : Quote -> Html Msg
 viewQuoteBox quote =
   div [ class "quote-box" ]
     [ viewQuote quote
@@ -90,6 +124,7 @@ viewQuoteBox quote =
                 [ type_ "button"
                 , autofocus True
                 , class "button"
+                , onClick ClickedNewQuote
                 ]
                 [ text "New quote" ]
             ]
