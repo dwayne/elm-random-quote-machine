@@ -95,3 +95,22 @@ https://twitter.com/intent/tweet?hashtags=quotes&text=%22I%20am%20not%20a%20prod
 instead of
 
 https://twitter.com/intent/tweet?hashtags=quotes&text=%22I%20am%20not%20a%20product%20of%20my%20circumstances.%20I%20am%20a%20product%20of%20my%20decisions.%22%20~%20Stephen%20Covey
+
+## How I made the animated GIF for step 5
+
+I recorded a short video with [Kazam](https://launchpad.net/kazam) and saved it as `step-5.mp4`.
+
+Then,
+
+```
+$ mkdir step-5
+$ mplayer -ao null step-5.mp4 -vo png:outdir=step-5
+```
+
+Finally, I selected the images I wanted to keep and I made the GIF.
+
+```
+convert -limit memory 1 -limit map 1 step-5/* step-5.gif
+```
+
+See https://linoxide.com/tools/make-animated-gif-linux/.
