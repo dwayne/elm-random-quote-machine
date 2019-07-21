@@ -122,3 +122,13 @@ body {
 
   color: #fff;
 }
+
+/* Transitions */
+
+.has-color-transition {
+  transition: color 2s;
+}
+
+.has-background-color-transition {
+  transition: background-color 2s;
+}

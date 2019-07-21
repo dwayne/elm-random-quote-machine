@@ -126,7 +126,7 @@ update msg model =
 view : Model -> Html Msg
 view { quote, color } =
   div
-    [ class "background"
+    [ class "background has-background-color-transition"
     , style "background-color" color
     ]
     [ div []
@@ -146,7 +146,7 @@ view { quote, color } =
 viewQuoteBox : Quote -> Color -> Html Msg
 viewQuoteBox quote color =
   div
-    [ class "quote-box"
+    [ class "quote-box has-color-transition"
     , style "color" color
     ]
     [ viewQuote quote
@@ -159,7 +159,7 @@ viewQuoteBox quote color =
             [ button
                 [ type_ "button"
                 , autofocus True
-                , class "button"
+                , class "button has-background-color-transition"
                 , style "background-color" color
                 , onClick ClickedNewQuote
                 ]
@@ -212,7 +212,7 @@ viewIconButton : String -> String -> Color -> Html msg
 viewIconButton name url color =
   a [ href url
     , target "_blank"
-    , class "icon-button"
+    , class "icon-button has-background-color-transition"
     , style "background-color" color
     ]
     [ i [ class ("fa fa-" ++ name) ] [] ]
