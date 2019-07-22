@@ -114,3 +114,7 @@ convert -limit memory 1 -limit map 1 step-5/* step-5.gif
 ```
 
 See https://linoxide.com/tools/make-animated-gif-linux/.
+
+## Select a random quote when the app loads
+
+This should be done in step 5 and not at the end of step 6.
