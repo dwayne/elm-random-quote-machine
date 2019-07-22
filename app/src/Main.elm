@@ -5,6 +5,7 @@ import Browser
 import Html exposing (Html, a, blockquote, button, cite, div, footer, i, p, span, text)
 import Html.Attributes exposing (autofocus, class, href, style, target, type_)
 import Html.Events exposing (onClick)
+import Json.Decode as D
 import Random
 import Url.Builder exposing (crossOrigin, string)
 
@@ -118,6 +119,21 @@ update msg model =
       ( { model | quote = newQuote, color = newColor }
       , Cmd.none
       )
+
+
+-- DECODERS
+
+
+quotesDecoder : D.Decoder (List Quote)
+quotesDecoder =
+  D.field "quotes" (D.list quoteDecoder)
+
+
+quoteDecoder : D.Decoder Quote
+quoteDecoder =
+  D.map2 Quote
+    (D.field "content" D.string)
+    (D.field "author" D.string)
 
 
 -- VIEW
