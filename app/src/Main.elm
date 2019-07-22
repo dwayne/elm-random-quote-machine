@@ -5,6 +5,7 @@ import Browser
 import Html exposing (Html, a, blockquote, button, cite, div, footer, i, p, span, text)
 import Html.Attributes exposing (autofocus, class, href, style, target, type_)
 import Html.Events exposing (onClick)
+import Http
 import Json.Decode as D
 import Random
 import Url.Builder exposing (crossOrigin, string)
@@ -39,13 +40,13 @@ type alias Quote =
 type alias Color = String
 
 
-init : () -> (Model, Cmd msg)
+init : () -> (Model, Cmd Msg)
 init _ =
   ( { quote = defaultQuote
     , quotes = allQuotes
     , color = defaultColor
     }
-  , Cmd.none
+  , getQuotes "https://gist.githubusercontent.com/dwayne/ff832ab1d4a0bf81585870369f984ebc/raw/46d874a29e9efe38006ec9865ad67b054ef312a8/quotes.json"
   )
 
 
@@ -102,6 +103,7 @@ allColors =
 type Msg
   = ClickedNewQuote
   | NewQuoteAndColor (Quote, Color)
+  | GotQuotes (Result Http.Error (List Quote))
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -119,6 +121,25 @@ update msg model =
       ( { model | quote = newQuote, color = newColor }
       , Cmd.none
       )
+
+    GotQuotes (Ok remoteQuotes) ->
+      ( { model | quotes = remoteQuotes }
+      , Cmd.none
+      )
+
+    GotQuotes (Err _) ->
+      ( model, Cmd.none )
+
+
+-- COMMANDS
+
+
+getQuotes : String -> Cmd Msg
+getQuotes url =
+  Http.get
+    { url = url
+    , expect = Http.expectJson GotQuotes quotesDecoder
+    }
 
 
 -- DECODERS
