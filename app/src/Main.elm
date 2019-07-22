@@ -46,7 +46,10 @@ init url =
     , quotes = allQuotes
     , color = defaultColor
     }
-  , getQuotes url
+  , Cmd.batch
+      [ generateNewQuoteAndColor allQuotes
+      , getQuotes url
+      ]
   )
 
 
@@ -111,10 +114,7 @@ update msg model =
   case msg of
     ClickedNewQuote ->
       ( model
-      , Random.generate NewQuoteAndColor <|
-          Random.pair
-            (Random.uniform defaultQuote model.quotes)
-            (Random.uniform defaultColor allColors)
+      , generateNewQuoteAndColor model.quotes
       )
 
     NewQuoteAndColor (newQuote, newColor) ->
@@ -132,6 +132,14 @@ update msg model =
 
 
 -- COMMANDS
+
+
+generateNewQuoteAndColor : List Quote -> Cmd Msg
+generateNewQuoteAndColor quotes =
+  Random.generate NewQuoteAndColor <|
+    Random.pair
+      (Random.uniform defaultQuote quotes)
+      (Random.uniform defaultColor allColors)
 
 
 getQuotes : String -> Cmd Msg
