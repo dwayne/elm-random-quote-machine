@@ -11,7 +11,7 @@ import Random
 import Url.Builder exposing (crossOrigin, string)
 
 
-main : Program () Model Msg
+main : Program String Model Msg
 main =
   Browser.element
     { init = init
@@ -40,13 +40,13 @@ type alias Quote =
 type alias Color = String
 
 
-init : () -> (Model, Cmd Msg)
-init _ =
+init : String -> (Model, Cmd Msg)
+init url =
   ( { quote = defaultQuote
     , quotes = allQuotes
     , color = defaultColor
     }
-  , getQuotes "https://gist.githubusercontent.com/dwayne/ff832ab1d4a0bf81585870369f984ebc/raw/46d874a29e9efe38006ec9865ad67b054ef312a8/quotes.json"
+  , getQuotes url
   )
 
 
