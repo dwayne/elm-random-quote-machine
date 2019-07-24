@@ -1,21 +1,40 @@
 # Step 2
 
-## Goal
+In this step your goal is to style the app using CSS. When you complete this
+step your app will look like the following:
 
-To style the app using CSS.
-
-This is what you will be trying to reproduce:
-
-![Screenshot of the app after step 2 is completed](assets/step-02-final.png)
+![A screenshot of the app after step 2 is completed](assets/step-02-final.png)
 
 ## Plan
 
-1. Apply general styles.
-2. Style the background.
-3. Style the quotation box.
-4. Style the attribution.
+1. [Set up for CSS](#set-up-for-css).
+2. [Style the body](#style-the-body).
+3. [Style the background](#style-the-background).
+4. [Style the quotation box](#style-the-quotation-box).
+5. [Style the attribution](#style-the-attribution).
 
-## Apply general styles
+## Set up for CSS
+
+In your project's root directory, create a new directory named `assets` and in
+it create a `styles.css` file.
+
+```sh
+$ mkdir assets
+$ touch assets/styles.css
+```
+
+Open the `index.html` file and add a link to the stylesheet just after the
+Font Awesome link.
+
+```html
+<link rel="stylesheet" href="assets/styles.css">
+```
+
+**N.B.** *In the steps below, any CSS you have to add goes in
+`assets/styles.css` and any HTML edits to add classes to the elements goes in
+`index.html`.*
+
+## Style the body
 
 ```css
 @import url("https://fonts.googleapis.com/css?family=Raleway:400,500");
@@ -31,9 +50,13 @@ body {
 }
 ```
 
-**Notes:**
+The [Raleway](https://fonts.google.com/specimen/Raleway) font is imported from
+[Google Fonts](https://fonts.google.com/) and only the 400 and 500
+weights are requested since that's all you'll need for this project.
 
-- Learn more about the [Raleway](https://fonts.google.com/specimen/Raleway) font.
+The `body`'s default margin is removed and its height is set to be 100% of the
+viewport's height. This sets the stage for when you need to place everything
+in the middle of the viewport&mdash;which happens next.
 
 ## Style the background
 
@@ -61,11 +84,18 @@ body {
 }
 ```
 
-The `body` and `.background` take up the entire viewport. The `.background` lays
-out its elements using the [flexbox model](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout).
-The `div` that wraps the quotation box and attribution is the sole child of the
-`.background` and so it will be horizontally and vertically centered within the
+By default, the `.background`'s height is the height of its content. However,
+you need it to extend to the height of the viewport.
+
+The `.background` uses
+[flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
+to layout its elements. The `div` that wraps
+the quotation box and attribution is the sole child element of the
+`.background` and so it will be placed in the middle of the
 viewport.
+
+**Question:** Is the `.background` really necessary? Couldn't we just put all
+these styles on the `body`? What do you think?
 
 ## Style the quotation box
 
@@ -215,3 +245,5 @@ viewport.
   color: #fff;
 }
 ```
+
+The end. Go to [step 3](step-03.md).
