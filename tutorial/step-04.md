@@ -1,26 +1,24 @@
 # Step 4
 
-## Goal
+In this step our goal is to refactor the Elm code. When we complete this step
+our app will look exactly as it did after [step 2](step-02.md) but the code
+will be organized in a way that will make it easier for us to add the features
+we need in later steps.
 
-To refactor the Elm code.
-
-After completing this step the app should look exactly as it did after step 2:
-
-![Screenshot of the app after step 3 is completed](assets/step-04-final.png)
+![A screenshot of the app after step 4 is completed](assets/step-02-final.png)
 
 ## Plan
 
-1. Extract a `viewQuote` function.
-2. Extract a `viewIconButton` function.
-3. Extract functions to generate the Twitter and Tumblr URLs.
-4. Extract a `viewQuoteBox` function.
-5. Add a `Quote` record.
+1. [Extract the `viewQuote` function](#extract-the-viewquote-function).
+2. [Extract the `viewIconButton` function](#extract-the-viewiconbutton-function).
+3. [Extract functions to generate the Twitter and Tumblr URLs](#extract-functions-to-generate-the-twitter-and-tumblr-urls).
+4. [Extract the `viewQuoteBox` function](#extract-the-viewquotebox-function).
+5. [Add the `Quote` record](#add-the-quote-record).
 
-## Extract a `viewQuote` function
+## Extract the `viewQuote` function
 
-In `main`, take the "HTML" that comprises the `blockquote` and name it
-`viewQuote`. Add two arguments—one to pass in the content of the quotation and
-the other for its author.
+From the `main` function, take the "HTML" that comprises the `blockquote` and
+wrap it in a function named `viewQuote` that takes two arguments.
 
 ```elm
 viewQuote : String -> String -> Html msg
@@ -38,7 +36,7 @@ viewQuote content author =
     ]
 ```
 
-Then, in the place of the `blockquote` call the function:
+Then, from `main` call `viewQuote`.
 
 ```elm
 viewQuote
@@ -46,7 +44,7 @@ viewQuote
   "Stephen Covey"
 ```
 
-## Extract a `viewIconButton` function
+## Extract the `viewIconButton` function
 
 Notice that
 
@@ -70,8 +68,7 @@ a [ href "https://www.tumblr.com/widgets/share/tool?posttype=quote&tags=quotes&c
 
 are quite similar.
 
-Write a function named `viewIconButton` that captures their similarities and
-allows you to pass in their differences as arguments.
+Write a function named `viewIconButton` to generalize the pattern you see.
 
 ```elm
 viewIconButton : String -> String -> Html msg
@@ -83,7 +80,7 @@ viewIconButton name url =
     [ i [ class ("fa fa-" ++ name) ] [] ]
 ```
 
-Go back to `main` and replace the links with the appropriate function calls.
+Go back to `main` and replace the links with the relevant function calls.
 
 For Twitter use:
 
@@ -91,21 +88,21 @@ For Twitter use:
 viewIconButton "twitter" "https://twitter.com/intent/tweet?hashtags=quotes&text=%22I%20am%20not%20a%20product%20of%20my%20circumstances.%20I%20am%20a%20product%20of%20my%20decisions.%22%20%E2%80%94%20Stephen%20Covey"
 ```
 
-For Tumblr use:
+And, for Tumblr use:
 
 ```elm
 viewIconButton "tumblr" "https://www.tumblr.com/widgets/share/tool?posttype=quote&tags=quotes&content=I%20am%20not%20a%20product%20of%20my%20circumstances.%20I%20am%20a%20product%20of%20my%20decisions.&caption=Stephen%20Covey&canonicalUrl=https%3A%2F%2Fwww.tumblr.com%2Fdocs%2Fen%2Fshare_button"
 ```
 
-The Twitter and Tumblr URLs would change based on the quotation's content and
-author. It follows that you would need a way to generate the URLs given that
-information.
+I hope you see that the Twitter and Tumblr URLs will change based on the
+quotation's content and author. Hence, you'll need a way to generate the URLs
+given that information. I'll show you how to do that next.
 
 ## Extract functions to generate the Twitter and Tumblr URLs
 
 Install
-[elm/url](https://package.elm-lang.org/packages/elm/url/1.0.0/)
-because it provides the functions you need to build the URLs.
+[elm/url](https://package.elm-lang.org/packages/elm/url/1.0.0/). It provides
+the functions we need to build the URLs.
 
 ```sh
 $ elm install elm/url
@@ -120,7 +117,7 @@ and
 
 **N.B.** *The
 [string](https://package.elm-lang.org/packages/elm/url/1.0.0/Url-Builder#string)
-function ensures that the query parameter is
+function ensures that the query parameter's value is
 [percent-encoded](https://tools.ietf.org/html/rfc3986#section-2.1).*
 
 ```elm
@@ -142,7 +139,7 @@ twitterUrl content author =
       ]
 ```
 
-And to generate the Tumblr URL write the `tumblrUrl` function:
+And, to generate the Tumblr URL write the `tumblrUrl` function:
 
 ```elm
 tumblrUrl : String -> String -> String
@@ -157,7 +154,7 @@ tumblrUrl content author =
     ]
 ```
 
-Update the arguments to the `viewIconButton` function calls.
+Then, update the arguments to the `viewIconButton` function calls.
 
 For Twitter use:
 
@@ -171,7 +168,7 @@ For Tumblr use:
 viewIconButton "tumblr" (tumblrUrl "I am not a product of my circumstances. I am a product of my decisions." "Stephen Covey")
 ```
 
-## Extract a `viewQuoteBox` function
+## Extract the `viewQuoteBox` function
 
 ```elm
 viewQuoteBox : String -> String -> Html msg
@@ -203,7 +200,7 @@ main =
     ]
 ```
 
-## Add a `Quote` record
+## Add the `Quote` record
 
 ```elm
 type alias Quote =
@@ -219,8 +216,8 @@ defaultQuote =
   }
 ```
 
-Update `main`, `viewQuoteBox`, `viewQuote`, `twitterUrl` and `tumblrUrl` to all
-work with the `Quote` record.
+You'll need to update `main`, `viewQuoteBox`, `viewQuote`, `twitterUrl` and
+`tumblrUrl` to all work with the `Quote` record.
 
 ```elm
 main =
@@ -267,7 +264,7 @@ tumblrUrl { content, author } =
   -- ...
 ```
 
-Here's the final version of the code after refactoring:
+Here's the final version of the code after all the refactoring is completed:
 
 ```elm
 module Main exposing (main)
@@ -376,3 +373,5 @@ viewIconButton name url =
     ]
     [ i [ class ("fa fa-" ++ name) ] [] ]
 ```
+
+The end. Go to [step 5](#step-05.md).
