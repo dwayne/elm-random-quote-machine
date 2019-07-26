@@ -1,7 +1,7 @@
 # Step 2
 
-In this step your goal is to style the app using CSS. When you complete this
-step your app will look like the following:
+In this step our goal is to style the app using CSS. When we complete this step
+our app will look like the following:
 
 ![A screenshot of the app after step 2 is completed](assets/step-02-final.png)
 
@@ -30,8 +30,8 @@ Font Awesome link.
 <link rel="stylesheet" href="assets/styles.css">
 ```
 
-**N.B.** *In the steps below, any CSS you have to add goes in
-`assets/styles.css` and any HTML edits to add classes to the elements goes in
+**N.B.** *In the steps below, any CSS you have to add goes into
+`assets/styles.css` and any HTML edits to add classes to the elements goes into
 `index.html`.*
 
 ## Style the body
@@ -52,11 +52,11 @@ body {
 
 The [Raleway](https://fonts.google.com/specimen/Raleway) font is imported from
 [Google Fonts](https://fonts.google.com/) and only the 400 and 500
-weights are requested since that's all you'll need for this project.
+weights are requested since that's all we'll need for this project.
 
 The `body`'s default margin is removed and its height is set to be 100% of the
-viewport's height. This sets the stage for when you need to place everything
-in the middle of the viewport&mdash;which happens next.
+viewport's height. This sets the stage for when we need to place everything
+in the middle of the viewport&mdash;which we do next.
 
 ## Style the background
 
@@ -85,17 +85,16 @@ in the middle of the viewport&mdash;which happens next.
 ```
 
 By default, the `.background`'s height is the height of its content. However,
-you need it to extend to the height of the viewport.
+we need it to extend to the height of the viewport.
 
 The `.background` uses
 [flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
-to layout its elements. The `div` that wraps
-the quotation box and attribution is the sole child element of the
-`.background` and so it will be placed in the middle of the
-viewport.
+to layout its elements. The `div` that wraps the quotation box and attribution
+is the sole child element of the `.background` and so it will be placed in the
+middle of the viewport.
 
 **Question:** Is the `.background` really necessary? Couldn't we just put all
-these styles on the `body`? What do you think?
+the styles on the `body`? What do you think?
 
 ## Style the quotation box
 

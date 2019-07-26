@@ -1,9 +1,9 @@
 # Step 3
 
-In this step your goal is to start using Elm. When you complete this step your
-app will look exactly as it did after step 2.
+In this step our goal is to start using Elm. When we complete this step our app
+will look exactly as it did after [step 2](step-02.md).
 
-![Screenshot of the app after step 3 is completed](assets/step-03-final.png)
+![A screenshot of the app after step 3 is completed](assets/step-02-final.png)
 
 **N.B.** *This step assumes you already have Elm installed. If you don't that's
 fine, just go [here](https://guide.elm-lang.org/install.html) to learn how to
@@ -29,7 +29,7 @@ directory created for you.
 
 The `elm.json` file tracks dependencies and other metadata for your app.
 
-The `src` directory is where you place all the Elm files comprising your app.
+The `src` directory is where you'll place all the Elm files comprising your app.
 In this case you'll need one file, `src/Main.elm`.
 
 **N.B.** *You can read https://elm-lang.org/0.19.0/init to learn more about
@@ -123,8 +123,8 @@ process is usually painless.
 **N.B.** *Read https://elm-lang.org/0.19.0/imports to learn more about how the
 `import` declarations work.*
 
-The `main` function contains mostly what you'd find in `index.html`
-except that instead of HTML tags and attributes you have function calls.
+The `main` function contains mostly what we'd find in `index.html` except that
+instead of HTML tags and attributes we have function calls.
 
 In general,
 
@@ -141,7 +141,7 @@ foo [ attr1 "a", attr2 "b" ] [ text "bar" ]
 where `foo` and `text` are in `Html` and `attr1` and `attr2` are in
 `Html.Attributes`.
 
-The only minor difference is the use of the Unicode code point `\u{2014}`
+The only minor difference is our use of the Unicode code point `\u{2014}`
 instead of the `&mdash;` HTML entity.
 
 **N.B.** *You can try using `&mdash;` in place of the Unicode code point to see

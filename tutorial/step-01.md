@@ -1,7 +1,7 @@
 # Step 1
 
-In this step your goal is to structure the app using HTML. When you complete
-this step your app will look like the following:
+In this step our goal is to structure the app using HTML. When we complete this
+step our app will look like the following:
 
 ![A screenshot of the app after step 1 is completed.](assets/step-01-final.png)
 
@@ -22,7 +22,7 @@ $ cd random-quote-machine
 $ touch index.html
 ```
 
-**N.B.** *In the future when I refer to "the root of the project" I will mean
+**N.B.** *From now on when I refer to "the root of the project" I will mean
 the `random-quote-machine` directory.*
 
 ## Write the HTML
@@ -52,7 +52,7 @@ your HTML:
 - [Introduction to HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Introduction_to_HTML5)
 - [Using the viewport meta tag to control layout on mobile browsers](https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag)
 
-You will be using [Font Awesome](https://fontawesome.com/v4.7.0/) for a
+We'll be using [Font Awesome](https://fontawesome.com/v4.7.0/) for a
 [left quote](https://fontawesome.com/v4.7.0/icon/quote-left) and the
 [Twitter](https://fontawesome.com/v4.7.0/icon/twitter) and
 [Tumblr](https://fontawesome.com/v4.7.0/icon/tumblr) icons.
@@ -112,20 +112,19 @@ Replace `<!-- 2 -->` with the following:
 ```
 
 [The blockquote element](https://html.spec.whatwg.org/multipage/grouping-content.html#the-blockquote-element)
-is used since it is semantically appropriate for what we
-want to do.
+is used since it is semantically appropriate for what we want to do.
 
 The [em dash](https://www.thepunctuationguide.com/em-dash.html) precedes the
 author's name when attributing the quotation.
 
 Read the Tweet
 [Web Intent](https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent.html)
-guide to learn how the Twitter web intent URL was generated. And, read the
+guide to learn how the Twitter web intent URL is generated. And, read the
 [Share Button Documentation](https://www.tumblr.com/docs/en/share_button) to
-learn how the Tumblr share URL was generated.
+learn how the Tumblr share URL is generated.
 
-The "New quote" button is the primary call to action so it is given the
-initial focus.
+The "New quote" button is the primary call to action so it is given the initial
+focus.
 
 Finally, replace `<!-- 3 -->` with the following:
 
@@ -135,11 +134,11 @@ Finally, replace `<!-- 3 -->` with the following:
 </footer>
 ```
 
-Feel free to change the URL and the name.
+Feel free to change the URL and the name to your liking.
 
 ## View the HTML in a browser
 
-You are free to use whatever method works for you.
+You're free to use whatever method works for you.
 
 But, here's what I usually do.
 
@@ -151,7 +150,8 @@ with [python](https://docs.python.org/2/using/cmdline.html).
 $ python -m SimpleHTTPServer
 ```
 
-It starts an HTTP server running on port 8000 that serves the contents of my current directory.
+It starts an HTTP server running on port 8000 that serves the contents of my
+current directory.
 
 I then open a browser and navigate to http://localhost:8000/ in order to view
 it.
