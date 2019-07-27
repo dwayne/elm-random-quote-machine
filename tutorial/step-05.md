@@ -1,33 +1,30 @@
 # Step 5
 
-## Goal
+In this step our goal is to make the "New quote" button work. Specifically,
+when the "New quote" button is clicked a new quotation will be displayed and
+the color of certain elements will change.
 
-To make the "New quote" button work.
-
-Specifically, when you click the "New quote" button a new quotation should be
-displayed and the color of various elements should be changed.
-
-This is what you will be trying to reproduce:
+When we complete this step our app will look like the following:
 
 ![Screenshot of the app after step 5 is completed](assets/step-05-final.gif)
 
 ## Plan
 
-1. Prepare for randomness.
-2. Display a random quote when the "New quote" button is clicked.
-3. Change the color of various elements when the "New quote" button is clicked.
-4. Add color transitions.
+1. [Prepare for randomness](#prepare-for-randomness).
+2. [Display a random quote](#display-a-random-quote).
+3. [Change colors randomly](#change-colors-randomly).
+4. [Add color transitions](#add-color-transitions).
 
 ## Prepare for randomness
 
-In order to work with randomness in your app you need to be able to
+To work with randomness in our app we'll need to be able to
 [command](https://guide.elm-lang.org/effects/) Elm's runtime system to generate
-random values for you.
+random values for us.
 
 [Browser.element](https://package.elm-lang.org/packages/elm/browser/1.0.1/Browser#element)
-allows you to work with [commands](https://guide.elm-lang.org/effects/).
+allows us to work with [commands](https://guide.elm-lang.org/effects/).
 
-Edit `src/Main.elm` to make use of
+Let's edit `src/Main.elm` to use
 [Browser.element](https://package.elm-lang.org/packages/elm/browser/1.0.1/Browser#element).
 
 ```elm
@@ -121,7 +118,7 @@ viewIconButton name url =
   -- ...
 ```
 
-## Display a random quote when the "New quote" button is clicked
+## Display a random quote
 
 Install [elm/random](https://package.elm-lang.org/packages/elm/random/1.0.0/).
 
@@ -129,10 +126,9 @@ Install [elm/random](https://package.elm-lang.org/packages/elm/random/1.0.0/).
 $ elm install elm/random
 ```
 
-Make the following edits to `src/Main.elm`:
+And then, make the following edits to `src/Main.elm`:
 
 ```elm
-import Html.Events exposing (onClick)
 import Random
 
 
@@ -213,20 +209,20 @@ viewQuoteBox quote =
 ```
 
 When the "New quote" button is clicked the `ClickedNewQuote` message is
-created by Elm's runtime and it eventually calls the `update` function with
-that message.
+created by Elm's runtime system and it eventually calls our `update` function
+with that message.
 
-The `ClickedNewQuote` branch of your `update` function is selected and it sends
-a command to the Elm runtime that tells the runtime to select a random quotation
-from your list of quotations and to wrap it in a `NewQuote` message.
+The `ClickedNewQuote` branch of our `update` function is selected and it sends
+a command to Elm's runtime that tells the runtime to select a random quotation
+from our list of quotations and to wrap it in a `NewQuote` message.
 
-When the `NewQuote` message is created by the runtime it eventually calls the
-`update` function with that message. The `NewQuote` branch is selected and your
-model gets updated with the new quotation.
+When the `NewQuote` message is created by the runtime, the runtime eventually
+calls our `update` function with that message. The `NewQuote` branch is
+selected and our model gets updated with the new quotation.
 
-## Change the color of various elements when the "New quote" button is clicked
+## Change colors randomly
 
-Make the following edits to `src/Main.elm`:
+Here are the edits you need to make:
 
 ```elm
 import Html.Attributes exposing (..., style, ...)
@@ -337,7 +333,7 @@ viewIconButton name url color =
     [ i [ class ("fa fa-" ++ name) ] [] ]
 ```
 
-Now when the "New quote" button is clicked both a quotation and a color are
+Now, when the "New quote" button is clicked both a quotation and a color are
 randomly selected.
 
 ```elm
@@ -349,7 +345,7 @@ Random.pair
 
 ## Add color transitions
 
-Add color transitions to make the color changes happen less abruptly.
+Finally, let's add some color transitions to make the colors change smoothly.
 
 Add two new classes to `assets/styles.css`:
 
@@ -365,7 +361,7 @@ Add two new classes to `assets/styles.css`:
 }
 ```
 
-Add the `has-color-transition` class to the quote box:
+And then, add the `has-color-transition` class to the quote box:
 
 ```elm
 viewQuoteBox quote color =
@@ -377,7 +373,7 @@ viewQuoteBox quote color =
     ]
 ```
 
-Add the `has-background-color-transition` class to the background and the
+And, add the `has-background-color-transition` class to the background and the
 buttons:
 
 ```elm
@@ -405,7 +401,8 @@ a [ -- ...
   [ i [ class ("fa fa-" ++ name) ] [] ]
 ```
 
-Here's the final version of the code:
+Here's the final version of `src/Main.elm` after we've completed all the changes
+in this step:
 
 ```elm
 module Main exposing (main)
@@ -627,3 +624,5 @@ viewIconButton name url color =
     ]
     [ i [ class ("fa fa-" ++ name) ] [] ]
 ```
+
+The end. Go to [step 6](step-06.md).
