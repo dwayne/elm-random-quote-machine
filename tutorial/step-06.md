@@ -1,38 +1,41 @@
 # Step 6
 
-## Goal
+In this step our goal is to get quotations from a remote source.
 
-To get quotes from a remote source on page load.
+When we complete this step our app will look exactly as it did after
+[step 5](step-05.md).
 
-When the app opens for the first time it should attempt to get quotes from an
-external URL. The quotes are returned in the JSON format in the following form:
+![A screenshot of the app after step 6 is completed](assets/step-05-final.gif)
+
+## Plan
+
+1. [Decode the quotations](#decode-the-quotations).
+2. [GET the quotes](#get-the-quotes).
+3. [Pass the URL for the remote source via a flag](#pass-the-url-for-the-remote-source-via-a-flag).
+4. [Select a random quote when the app initially loads](#select-a-random-quote-when-the-app-initially-loads).
+
+## Decode the quotations
+
+The quotations are returned in the JSON format in the following form:
 
 ```json
 {
   "quotes": [
     { "content": "Life isn't about getting and having, it's about giving and being.", "author": "Kevin Kruse" },
-    { "content": "Whatever the mind of man can conceive and believe, it can achieve.", "author": "Napoleon Hill" },
-    ...
+    { "content": "Whatever the mind of man can conceive and believe, it can achieve.", "author": "Napoleon Hill" }
   ]
 }
 ```
 
-## Plan
-
-1. Write JSON decoders to decode the quotes.
-2. Get the quotes.
-3. Pass the external URL from which to get the quotes via a flag.
-4. Select a random quote when the app loads.
-
-## Write JSON decoders to decode the quotes
-
-Install [elm/json](https://package.elm-lang.org/packages/elm/json/1.1.3/).
+We'll need to install
+[elm/json](https://package.elm-lang.org/packages/elm/json/1.1.3/) to decode the
+response.
 
 ```sh
 $ elm install elm/json
 ```
 
-Write the decoders.
+Let's write the decoders.
 
 ```elm
 import Json.Decode as D
@@ -56,7 +59,10 @@ quoteDecoder =
 The `quoteDecoder` can decode JSON in the format:
 
 ```json
-{ "content": "...", "author": "..." }
+{
+  "content": "...what matters in the long run is sticking with things and working daily to get better at them.",
+  "author": "Angela Duckworth"
+}
 ```
 
 And, the `quotesDecoder` can decode JSON in the format:
@@ -64,15 +70,23 @@ And, the `quotesDecoder` can decode JSON in the format:
 ```json
 {
   "quotes": [
-    { "content": "...", "author": "..." },
-    ...
+    {
+      "content": "...what matters in the long run is sticking with things and working daily to get better at them.",
+      "author": "Angela Duckworth"
+    },
+    {
+      "content": "Don't judge. Teach. It's a learning process.",
+      "author": "Carol S. Dweck"
+    }
   ]
 }
 ```
 
-Read the [intro to JSON decoders](https://guide.elm-lang.org/effects/json.html).
+**N.B.** *Read the
+[intro to JSON decoders](https://guide.elm-lang.org/effects/json.html) to learn
+more.*
 
-## Get the quotes
+## GET the quotes
 
 Install [elm/http](https://package.elm-lang.org/packages/elm/http/2.0.0/).
 
@@ -80,7 +94,7 @@ Install [elm/http](https://package.elm-lang.org/packages/elm/http/2.0.0/).
 $ elm install elm/http
 ```
 
-Get the quotes when the app loads.
+And, write the following to fetch the quotes when the app initially loads:
 
 ```elm
 import Http
@@ -123,11 +137,12 @@ getQuotes url =
     }
 ```
 
-Read the [intro to HTTP](https://guide.elm-lang.org/effects/http.html).
+**N.B.** *Read the [intro to HTTP](https://guide.elm-lang.org/effects/http.html)
+to learn more.*
 
-## Pass the external URL from which to get the quotes via a flag
+## Pass the URL for the remote source via a flag
 
-To make the external URL easily configurable pass it into the app via a
+To make the URL easy to configure we'll pass it into the app via a
 [flag](https://guide.elm-lang.org/interop/flags.html).
 
 Edit `index.html`.
@@ -154,7 +169,7 @@ init url =
   )
 ```
 
-## Select a random quote when the app loads
+## Select a random quote when the app initially loads
 
 ```elm
 init : String -> (Model, Cmd Msg)
@@ -184,3 +199,5 @@ generateNewQuoteAndColor quotes =
       (Random.uniform defaultQuote quotes)
       (Random.uniform defaultColor allColors)
 ```
+
+The end.
