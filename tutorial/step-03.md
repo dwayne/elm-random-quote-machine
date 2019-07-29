@@ -3,7 +3,7 @@
 In this step our goal is to start using Elm. When we complete this step our app
 will look exactly as it did after [step 2](step-02.md).
 
-![A screenshot of the app after step 3 is completed](assets/step-02-final.png)
+![A screenshot of the app after step 3 is completed.](assets/step-02-final.png)
 
 **N.B.** *This step assumes you already have Elm installed. If you don't that's
 fine, just go [here](https://guide.elm-lang.org/install.html) to learn how to

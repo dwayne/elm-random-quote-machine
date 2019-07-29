@@ -5,7 +5,7 @@ our app will look exactly as it did after [step 2](step-02.md) but the code
 will be organized in a way that will make it easier for us to add the features
 we need in later steps.
 
-![A screenshot of the app after step 4 is completed](assets/step-02-final.png)
+![A screenshot of the app after step 4 is completed.](assets/step-02-final.png)
 
 ## Plan
 

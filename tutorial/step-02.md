@@ -3,7 +3,7 @@
 In this step our goal is to style the app using CSS. When we complete this step
 our app will look like the following:
 
-![A screenshot of the app after step 2 is completed](assets/step-02-final.png)
+![A screenshot of the app after step 2 is completed.](assets/step-02-final.png)
 
 ## Plan
 

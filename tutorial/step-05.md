@@ -6,7 +6,7 @@ the color of certain elements will change.
 
 When we complete this step our app will look like the following:
 
-![Screenshot of the app after step 5 is completed](assets/step-05-final.gif)
+![A screenshot of the app after step 5 is completed.](assets/step-05-final.gif)
 
 ## Plan
 
