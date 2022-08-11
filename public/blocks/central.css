@@ -1,0 +1,43 @@
+.central {
+  --distance-from-top: 50px;
+
+  height: 100%;
+  overflow: auto;
+  padding-top: var(--distance-from-top);
+}
+
+.central__wrapper {
+  min-width: 400px;
+}
+
+@media screen and (min-width: 500px) and (min-height: 600px) {
+  .central {
+    --distance-from-top: 0px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .central__wrapper {
+    max-width: 500px;
+  }
+}
+
+@media screen and (min-width: 500px) and (max-height: 600px) {
+  .central__wrapper {
+    max-width: 500px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 500px) and (min-height: 600px) {
+  .central {
+    --distance-from-top: 0px;
+
+    display: flex;
+    align-items: center;
+  }
+}
