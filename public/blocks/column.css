@@ -5,10 +5,10 @@
   flex-direction: column;
 }
 
-.column--center {
-  align-items: center;
-}
-
 .column > :not(:last-child) {
   margin-bottom: var(--space-between);
+}
+
+.column--center {
+  align-items: center;
 }

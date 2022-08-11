@@ -8,42 +8,47 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/blocks/central.css">
+    <link rel="stylesheet" href="/blocks/column.css">
   </head>
   <body>
-    <div class="background">
-      <div class="container">
-        <div class="container__top">
-          <main class="main">
-            <div class="main__top">
-              <figure class="quote">
-                <blockquote class="quote__content">
-                  <p class="quote__text"><span class="quote__mark"><i class="fas fa-quote-left"></i></span>Whatever you can do, or dream you can, begin it. Boldness has genius, power and magic in it.</p>
-                </blockquote>
-                <figcaption class="quote__attribution">
-                  &mdash; <cite class="quote__author">Johann Wolfgang von Goethe</cite>
-                </figcaption>
-              </figure>
-            </div>
-            <div class="main__bottom">
-              <ul class="actions">
-                <li class="actions__action">
-                  <a href="#" target="_blank" class="button button--link"><i class="fab fa-twitter"></i></a>
-                </li>
-                <li class="actions__action">
-                  <a href="#" target="_blank" class="button button--link"><i class="fab fa-tumblr"></i></a>
-                </li>
-                <li class="actions__action">
-                  <button class="button button--normal">New quote</button>
-                </li>
-              </ul>
+    <div class="central">
+      <div class="central__wrapper">
+        <div class="column column--center">
+          <main>
+            <div class="main">
+              <div class="main__top">
+                <figure class="quote">
+                  <blockquote class="quote__content">
+                    <p class="quote__text"><span class="quote__mark"><i class="fas fa-quote-left"></i></span>Whatever you can do, or dream you can, begin it. Boldness has genius, power and magic in it.</p>
+                  </blockquote>
+                  <figcaption class="quote__attribution">
+                    &mdash; <cite class="quote__author">Johann Wolfgang von Goethe</cite>
+                  </figcaption>
+                </figure>
+              </div>
+              <div class="main__bottom">
+                <ul class="actions">
+                  <li class="actions__action">
+                    <a href="#" target="_blank" class="button button--link"><i class="fab fa-twitter"></i></a>
+                  </li>
+                  <li class="actions__action">
+                    <a href="#" target="_blank" class="button button--link"><i class="fab fa-tumblr"></i></a>
+                  </li>
+                  <li class="actions__action">
+                    <button class="button button--normal">New quote</button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </main>
+
+          <footer>
+            <p class="attribution">
+              by <a href="#" class="attribution__link">dwayne</a>
+            </p>
+          </footer>
         </div>
-        <footer class="container__bottom">
-          <p class="attribution">
-            by <a href="#" class="attribution__link">dwayne</a>
-          </p>
-        </footer>
       </div>
     </div>
   </body>

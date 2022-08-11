@@ -12,48 +12,6 @@ body {
   font-weight: 400;
 }
 
-.background {
-  height: 100%;
-  overflow: auto;
-  background-color: #333;
-}
-
-.container {
-  min-width: 400px;
-  padding: 50px 20px 50px 20px;
-}
-
-.container__top {
-  margin-bottom: 15px;
-}
-
-@media screen and (min-width: 500px) and (min-height: 600px) {
-  .background {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .container {
-    max-width: 500px;
-  }
-}
-
-@media screen and (min-width: 500px) and (max-height: 599px) {
-  .container {
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-@media screen and (max-width: 499px) and (min-height: 600px) {
-  .background {
-    display: flex;
-    align-items: center;
-  }
-}
-
 .main {
   padding: 40px 50px;
   border-radius: 3px;
