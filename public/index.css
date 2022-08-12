@@ -14,6 +14,102 @@ body {
   font-weight: 400;
 }
 
+/* Block: Central */
+
+.central {
+  height: 100%;
+  overflow: auto;
+  background-color: #333;
+}
+
+.central__wrapper {
+  min-width: 400px;
+  padding: 50px 20px;
+}
+
+@media screen and (min-width: 500px) and (min-height: 600px) {
+  .central {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .central__wrapper {
+    max-width: 500px;
+  }
+}
+
+@media screen and (min-width: 500px) and (max-height: 600px) {
+  .central__wrapper {
+    max-width: 500px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 500px) and (min-height: 600px) {
+  .central {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Block: Column */
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.column > :not(:last-child) {
+  margin-bottom: 15px;
+}
+
+.column--center {
+  align-items: center;
+}
+
+/* Block: Card */
+
+.card {
+  padding: 40px 50px;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #333;
+}
+
+.card__top {
+  margin-bottom: 30px;
+}
+
+/* Block: Quote */
+
+.quote {
+  margin: 0;
+}
+
+.quote__content {
+  margin: 0 0 30px 0;
+}
+
+.quote__text {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.quote__mark {
+  margin-right: 12px;
+}
+
+.quote__attribution {
+  text-align: right;
+}
+
+.quote__author {
+  font-style: italic;
+}
+
 /* Block: Button */
 
 .button {
