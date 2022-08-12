@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,500');
 
+/* Global */
+
 * {
   box-sizing: border-box;
 }
@@ -12,47 +14,7 @@ body {
   font-weight: 400;
 }
 
-.actions {
-  margin: 0;
-  padding-left: 0;
-  list-style-type: none;
-
-  display: flex;
-}
-
-.actions__action:nth-child(1),
-.actions__action:nth-child(2) {
-  margin-right: 10px;
-}
-
-.actions__action:nth-child(3) {
-  margin-left: auto;
-}
-
-.quote {
-  margin: 0;
-}
-
-.quote__content {
-  margin: 0 0 30px 0;
-}
-
-.quote__text {
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-.quote__mark {
-  margin-right: 12px;
-}
-
-.quote__attribution {
-  text-align: right;
-}
-
-.quote__author {
-  font-style: italic;
-}
+/* Block: Button */
 
 .button {
   height: 30px;
@@ -65,7 +27,7 @@ body {
   opacity: 0.9;
 }
 
-.button--link {
+a.button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,7 +37,7 @@ body {
   text-decoration: none;
 }
 
-.button--normal {
+button.button {
   border: none;
   padding-left: 15px;
   padding-right: 15px;
@@ -84,6 +46,26 @@ body {
 
   white-space: nowrap;
 }
+
+/* Block: Actions */
+
+.actions {
+  margin: 0;
+  padding-left: 0;
+  list-style-type: none;
+
+  display: flex;
+}
+
+.actions__action:not(:last-child) {
+  margin-right: 10px;
+}
+
+.actions__action:last-child {
+  margin-left: auto;
+}
+
+/* Block: Attribution */
 
 .attribution {
   margin: 0;

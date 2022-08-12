@@ -1,0 +1,24 @@
+.quote {
+  margin: 0;
+}
+
+.quote__content {
+  margin: 0 0 30px 0;
+}
+
+.quote__text {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.quote__mark {
+  margin-right: 12px;
+}
+
+.quote__attribution {
+  text-align: right;
+}
+
+.quote__author {
+  font-style: italic;
+}
