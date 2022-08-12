@@ -12,17 +12,6 @@ body {
   font-weight: 400;
 }
 
-.main {
-  padding: 40px 50px;
-  border-radius: 3px;
-  background-color: #fff;
-  color: #333;
-}
-
-.main__top {
-  margin-bottom: 30px;
-}
-
 .actions {
   margin: 0;
   padding-left: 0;
