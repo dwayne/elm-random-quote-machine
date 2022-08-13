@@ -3,12 +3,9 @@
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .column > :not(:last-child) {
   margin-bottom: var(--space-between);
-}
-
-.column--center {
-  align-items: center;
 }
