@@ -4,11 +4,13 @@ module Main exposing (main)
 import Browser
 import Html as H
 import Html.Attributes as HA
+import Html.Events as HE
 import NonEmptyList as NonEmptyList exposing (NonEmptyList)
+import Random
 import Url.Builder as UB
 
 
-main : Program () Model msg
+main : Program () Model Msg
 main =
   Browser.element
     { init = init
@@ -23,6 +25,7 @@ main =
 
 type alias Model =
   { quotes : NonEmptyList Quote
+  , quote : Quote
   }
 
 
@@ -32,33 +35,47 @@ type alias Quote =
   }
 
 
-init : () -> (Model, Cmd msg)
+init : () -> (Model, Cmd Msg)
 init _ =
   ( { quotes = defaultQuotes
+    , quote = NonEmptyList.head defaultQuotes
     }
-  , Cmd.none
+  , generateNewQuote defaultQuotes
   )
 
 
 -- UPDATE
 
 
-update : msg -> Model -> (Model, Cmd msg)
-update _ model =
-  ( model
-  , Cmd.none
-  )
+type Msg
+  = ClickedNewQuote
+  | GeneratedAQuote Quote
+
+
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model =
+  case msg of
+    ClickedNewQuote ->
+      ( model
+      , generateNewQuote model.quotes
+      )
+
+    GeneratedAQuote quote ->
+      ( { model | quote = quote }
+      , Cmd.none
+      )
+
+
+generateNewQuote : NonEmptyList Quote -> Cmd Msg
+generateNewQuote =
+  NonEmptyList.uniform >> Random.generate GeneratedAQuote
 
 
 -- VIEW
 
 
-view : Model -> H.Html msg
-view { quotes } =
-  let
-    quote =
-      NonEmptyList.head quotes
-  in
+view : Model -> H.Html Msg
+view { quote } =
   viewCentral <|
     viewColumn
       [ H.main_ []
@@ -68,7 +85,7 @@ view { quotes } =
                   viewActions
                     [ viewButtonLink Twitter quote
                     , viewButtonLink Tumblr quote
-                    , viewButton "New quote"
+                    , viewButton ClickedNewQuote "New quote"
                     ]
               }
           ]
@@ -192,10 +209,12 @@ tumblrUrl { text, author } =
     ]
 
 
-viewButton : String -> H.Html msg
-viewButton text =
+viewButton : msg -> String -> H.Html msg
+viewButton onClick text =
   H.button
-    [ HA.class "button" ]
+    [ HA.class "button"
+    , HE.onClick onClick
+    ]
     [ H.text text ]
 
 
