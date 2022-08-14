@@ -4,6 +4,7 @@ module Main exposing (main)
 import Browser
 import Html as H
 import Html.Attributes as HA
+import NonEmptyList as NonEmptyList exposing (NonEmptyList)
 import Url.Builder as UB
 
 
@@ -21,7 +22,7 @@ main =
 
 
 type alias Model =
-  { quote : Quote
+  { quotes : NonEmptyList Quote
   }
 
 
@@ -33,10 +34,7 @@ type alias Quote =
 
 init : () -> (Model, Cmd msg)
 init _ =
-  ( { quote =
-        { text = "Whatever you can do, or dream you can, begin it. Boldness has genius, power and magic in it."
-        , author = "Johann Wolfgang von Goethe"
-        }
+  ( { quotes = defaultQuotes
     }
   , Cmd.none
   )
@@ -56,7 +54,11 @@ update _ model =
 
 
 view : Model -> H.Html msg
-view { quote } =
+view { quotes } =
+  let
+    quote =
+      NonEmptyList.head quotes
+  in
   viewCentral <|
     viewColumn
       [ H.main_ []
@@ -207,4 +209,28 @@ viewAttribution =
         , HA.class "attribution__link"
         ]
         [ H.text "dwayne" ]
+    ]
+
+
+-- DATA
+
+
+defaultQuotes : NonEmptyList Quote
+defaultQuotes =
+  NonEmptyList.fromList
+    { text = "I am not a product of my circumstances. I am a product of my decisions."
+    , author = "Stephen Covey"
+    }
+    [ { text = "Transferring your passion to your job is far easier than finding a job that happens to match your passion."
+      , author = "Seth Godin"
+      }
+    , { text = "Less mental clutter means more mental resources available for deep thinking."
+      , author = "Cal Newport"
+      }
+    , { text = "How much time he saves who does not look to see what his neighbor says or does or thinks."
+      , author = "Marcus Aurelius"
+      }
+    , { text = "You do not rise to the level of your goals. You fall to the level of your systems."
+      , author = "James Clear"
+      }
     ]
