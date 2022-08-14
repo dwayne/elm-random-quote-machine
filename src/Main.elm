@@ -25,7 +25,8 @@ main =
 
 type alias Model =
   { quotes : NonEmptyList Quote
-  , quote : Quote
+  , colors : NonEmptyList Color
+  , selection : Selection
   }
 
 
@@ -35,12 +36,33 @@ type alias Quote =
   }
 
 
+type alias Color =
+  String
+
+
+type alias Selection =
+  { quote : Quote
+  , color : Color
+  }
+
+
 init : () -> (Model, Cmd Msg)
 init _ =
-  ( { quotes = defaultQuotes
-    , quote = NonEmptyList.head defaultQuotes
+  let
+    quotes =
+      defaultQuotes
+
+    colors =
+      defaultColors
+  in
+  ( { quotes = quotes
+    , colors = colors
+    , selection =
+        { quote = NonEmptyList.head quotes
+        , color = NonEmptyList.head colors
+        }
     }
-  , generateNewQuote defaultQuotes
+  , generateNewSelection quotes colors
   )
 
 
@@ -49,7 +71,7 @@ init _ =
 
 type Msg
   = ClickedNewQuote
-  | GeneratedAQuote Quote
+  | GeneratedNewSelection Selection
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -57,35 +79,38 @@ update msg model =
   case msg of
     ClickedNewQuote ->
       ( model
-      , generateNewQuote model.quotes
+      , generateNewSelection model.quotes model.colors
       )
 
-    GeneratedAQuote quote ->
-      ( { model | quote = quote }
+    GeneratedNewSelection selection ->
+      ( { model | selection = selection }
       , Cmd.none
       )
 
 
-generateNewQuote : NonEmptyList Quote -> Cmd Msg
-generateNewQuote =
-  NonEmptyList.uniform >> Random.generate GeneratedAQuote
+generateNewSelection : NonEmptyList Quote -> NonEmptyList Color -> Cmd Msg
+generateNewSelection quotes colors =
+  Random.generate GeneratedNewSelection <|
+    Random.map2 Selection
+      (NonEmptyList.uniform quotes)
+      (NonEmptyList.uniform colors)
 
 
 -- VIEW
 
 
 view : Model -> H.Html Msg
-view { quote } =
-  viewCentral <|
+view { selection } =
+  viewCentral selection.color <|
     viewColumn
       [ H.main_ []
           [ viewCard
-              { top = viewQuote quote
+              { top = viewQuote selection
               , bottom =
                   viewActions
-                    [ viewButtonLink Twitter quote
-                    , viewButtonLink Tumblr quote
-                    , viewButton ClickedNewQuote "New quote"
+                    [ viewButtonLink Twitter selection
+                    , viewButtonLink Tumblr selection
+                    , viewButton selection.color ClickedNewQuote "New quote"
                     ]
               }
           ]
@@ -94,10 +119,12 @@ view { quote } =
       ]
 
 
-viewCentral : H.Html msg -> H.Html msg
-viewCentral body =
+viewCentral : Color -> H.Html msg -> H.Html msg
+viewCentral backgroundColor body =
   H.div
-    [ HA.class "central" ]
+    [ HA.class "central"
+    , HA.style "background-color" backgroundColor
+    ]
     [ H.div
         [ HA.class "central__wrapper" ]
         [ body ]
@@ -122,10 +149,12 @@ viewCard { top, bottom } =
     ]
 
 
-viewQuote : Quote -> H.Html msg
-viewQuote { text, author } =
+viewQuote : Selection -> H.Html msg
+viewQuote { quote, color } =
   H.figure
-    [ HA.class "quote" ]
+    [ HA.class "quote"
+    , HA.style "color" color
+    ]
     [ H.blockquote
         [ HA.class "quote__content" ]
         [ H.p
@@ -133,7 +162,7 @@ viewQuote { text, author } =
             [ H.span
                 [ HA.class "quote__mark" ]
                 [ H.i [ HA.class "fas fa-quote-left" ] [] ]
-            , H.text text
+            , H.text quote.text
             ]
         ]
     , H.figcaption
@@ -141,7 +170,7 @@ viewQuote { text, author } =
         [ H.text "— "
         , H.cite
             [ HA.class "quote_author" ]
-            [ H.text author ]
+            [ H.text quote.author ]
         ]
     ]
 
@@ -162,8 +191,8 @@ type SocialMedia
   | Tumblr
 
 
-viewButtonLink : SocialMedia -> Quote -> H.Html msg
-viewButtonLink socialMedia quote =
+viewButtonLink : SocialMedia -> Selection -> H.Html msg
+viewButtonLink socialMedia { quote, color } =
   let
     (name, url) =
       case socialMedia of
@@ -181,6 +210,7 @@ viewButtonLink socialMedia quote =
     [ HA.href url
     , HA.target "_blank"
     , HA.class "button"
+    , HA.style "background-color" color
     ]
     [ H.i [ HA.class <| "fab fa-" ++ name ] [] ]
 
@@ -209,10 +239,11 @@ tumblrUrl { text, author } =
     ]
 
 
-viewButton : msg -> String -> H.Html msg
-viewButton onClick text =
+viewButton : Color -> msg -> String -> H.Html msg
+viewButton backgroundColor onClick text =
   H.button
     [ HA.class "button"
+    , HA.style "background-color" backgroundColor
     , HE.onClick onClick
     ]
     [ H.text text ]
@@ -252,4 +283,22 @@ defaultQuotes =
     , { text = "You do not rise to the level of your goals. You fall to the level of your systems."
       , author = "James Clear"
       }
+    ]
+
+
+defaultColors : NonEmptyList Color
+defaultColors =
+  NonEmptyList.fromList
+    "#16a085"
+    [ "#27ae60"
+    , "#2c3e50"
+    , "#f39c12"
+    , "#e74c3c"
+    , "#9b59b6"
+    , "#fb6964"
+    , "#342224"
+    , "#472e32"
+    , "#bdbb99"
+    , "#77b1a9"
+    , "#73a857"
     ]

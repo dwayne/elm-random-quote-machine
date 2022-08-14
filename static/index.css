@@ -2,6 +2,11 @@
 
 /* Global */
 
+:root {
+  --default-color: #333;
+}
+
+
 * {
   box-sizing: border-box;
 }
@@ -19,7 +24,7 @@ body {
 .central {
   height: 100%;
   overflow: auto;
-  background-color: #333;
+  background-color: var(--default-color);
 }
 
 .central__wrapper {
@@ -73,7 +78,6 @@ body {
   padding: 40px 50px;
   border-radius: 3px;
   background-color: #fff;
-  color: #333;
 }
 
 .card__top {
@@ -84,6 +88,7 @@ body {
 
 .quote {
   margin: 0;
+  color: var(--default-color);
 }
 
 .quote__content {
@@ -112,7 +117,7 @@ body {
 .button {
   height: 30px;
   border-radius: 3px;
-  background-color: #333;
+  background-color: var(--default-color);
   color: #fff;
 }
 
