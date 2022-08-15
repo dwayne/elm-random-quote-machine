@@ -4,6 +4,8 @@
 
 :root {
   --default-color: #333;
+  --transition-color: color 2s;
+  --transition-background-color: background-color 2s;
 }
 
 
@@ -19,12 +21,15 @@ body {
   font-weight: 400;
 }
 
+
 /* Block: Central */
 
 .central {
   height: 100%;
   overflow: auto;
+
   background-color: var(--default-color);
+  transition: var(--transition-background-color);
 }
 
 .central__wrapper {
@@ -88,7 +93,9 @@ body {
 
 .quote {
   margin: 0;
+
   color: var(--default-color);
+  transition: var(--transition-color);
 }
 
 .quote__content {
@@ -118,8 +125,10 @@ body {
 .button {
   height: 30px;
   border-radius: 3px;
-  background-color: var(--default-color);
   color: #fff;
+
+  background-color: var(--default-color);
+  transition: var(--transition-background-color);
 }
 
 .button:hover {
