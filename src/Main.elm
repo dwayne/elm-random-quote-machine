@@ -1,11 +1,14 @@
 module Main exposing (main)
 
 
+import API
 import Browser
 import Html as H
 import Html.Attributes as HA
 import Html.Events as HE
+import Http
 import NonEmptyList as NonEmptyList exposing (NonEmptyList)
+import Quote exposing (Quote)
 import Random
 import Url.Builder as UB
 
@@ -30,12 +33,6 @@ type alias Model =
   }
 
 
-type alias Quote =
-  { text : String
-  , author : String
-  }
-
-
 type alias Color =
   String
 
@@ -49,6 +46,9 @@ type alias Selection =
 init : () -> (Model, Cmd Msg)
 init _ =
   let
+    url =
+      "https://gist.githubusercontent.com/dwayne/ff832ab1d4a0bf81585870369f984ebc/raw/053e75b301644239ed4c5422e8af42363b6ba967/quotes.json"
+
     quotes =
       defaultQuotes
 
@@ -62,7 +62,10 @@ init _ =
         , color = NonEmptyList.head colors
         }
     }
-  , generateNewSelection quotes colors
+  , Cmd.batch
+      [ generateNewSelection quotes colors
+      , API.getQuotes GotQuotes url
+      ]
   )
 
 
@@ -72,6 +75,7 @@ init _ =
 type Msg
   = ClickedNewQuote
   | GeneratedNewSelection Selection
+  | GotQuotes (Result Http.Error (List Quote))
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -84,6 +88,23 @@ update msg model =
 
     GeneratedNewSelection selection ->
       ( { model | selection = selection }
+      , Cmd.none
+      )
+
+    GotQuotes (Ok quotes) ->
+      case quotes of
+        quote :: restQuotes ->
+          ( { model | quotes = NonEmptyList.fromList quote restQuotes }
+          , Cmd.none
+          )
+
+        [] ->
+          ( model
+          , Cmd.none
+          )
+
+    GotQuotes (Err _) ->
+      ( model
       , Cmd.none
       )
 
