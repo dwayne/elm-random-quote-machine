@@ -2,6 +2,11 @@
 
 /* Global */
 
+:root {
+  --default-color: #333;
+}
+
+
 * {
   box-sizing: border-box;
 }
@@ -19,15 +24,15 @@ body {
 .central {
   height: 100%;
   overflow: auto;
-  background-color: #333;
+  background-color: var(--default-color);
 }
 
 .central__wrapper {
-  min-width: 400px;
+  min-width: 360px;
   padding: 50px 20px;
 }
 
-@media screen and (min-width: 500px) and (min-height: 600px) {
+@media screen and (min-width: 590px) and (min-height: 600px) {
   .central {
     display: flex;
     align-items: center;
@@ -35,20 +40,20 @@ body {
   }
 
   .central__wrapper {
-    max-width: 500px;
+    max-width: 590px;
   }
 }
 
-@media screen and (min-width: 500px) and (max-height: 600px) {
+@media screen and (min-width: 590px) and (max-height: 600px) {
   .central__wrapper {
-    max-width: 500px;
+    max-width: 590px;
 
     margin-left: auto;
     margin-right: auto;
   }
 }
 
-@media screen and (max-width: 500px) and (min-height: 600px) {
+@media screen and (max-width: 590px) and (min-height: 600px) {
   .central {
     display: flex;
     align-items: center;
@@ -73,7 +78,6 @@ body {
   padding: 40px 50px;
   border-radius: 3px;
   background-color: #fff;
-  color: #333;
 }
 
 .card__top {
@@ -84,6 +88,7 @@ body {
 
 .quote {
   margin: 0;
+  color: var(--default-color);
 }
 
 .quote__content {
@@ -93,6 +98,7 @@ body {
 .quote__text {
   margin: 0;
   font-size: 1.8rem;
+  text-align: center;
 }
 
 .quote__mark {
@@ -112,7 +118,7 @@ body {
 .button {
   height: 30px;
   border-radius: 3px;
-  background-color: #333;
+  background-color: var(--default-color);
   color: #fff;
 }
 

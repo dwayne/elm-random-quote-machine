@@ -1,5 +1,6 @@
 .quote {
   margin: 0;
+  color: #333;
 }
 
 .quote__content {
@@ -9,6 +10,7 @@
 .quote__text {
   margin: 0;
   font-size: 1.8rem;
+  text-align: center;
 }
 
 .quote__mark {
