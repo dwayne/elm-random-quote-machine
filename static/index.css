@@ -98,6 +98,7 @@ body {
 .quote__text {
   margin: 0;
   font-size: 1.8rem;
+  text-align: center;
 }
 
 .quote__mark {
