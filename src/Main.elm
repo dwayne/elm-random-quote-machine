@@ -13,7 +13,7 @@ import Random
 import Url.Builder as UB
 
 
-main : Program () Model Msg
+main : Program String Model Msg
 main =
   Browser.element
     { init = init
@@ -43,12 +43,9 @@ type alias Selection =
   }
 
 
-init : () -> (Model, Cmd Msg)
-init _ =
+init : String -> (Model, Cmd Msg)
+init url =
   let
-    url =
-      "https://gist.githubusercontent.com/dwayne/ff832ab1d4a0bf81585870369f984ebc/raw/053e75b301644239ed4c5422e8af42363b6ba967/quotes.json"
-
     quotes =
       defaultQuotes
 
