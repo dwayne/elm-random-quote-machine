@@ -6,6 +6,5 @@ pkgs.mkShell {
   buildInputs = [
     pkgs.caddy
     pkgs.elmPackages.elm
-    pkgs.nodejs-16_x
   ];
 }
