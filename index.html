@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -6,17 +6,17 @@
 
     <title>Random Quote Machine</title>
 
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/elm-random-quote-machine/index.css">
 
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="/elm-random-quote-machine/app.js"></script>
   </head>
-  <body class="m0 vh100">
+  <body>
     <div id="app"></div>
-    <script src="app.js"></script>
     <script>
       Elm.Main.init({
         node: document.getElementById("app"),
-        flags: "https://gist.githubusercontent.com/dwayne/ff832ab1d4a0bf81585870369f984ebc/raw/46d874a29e9efe38006ec9865ad67b054ef312a8/quotes.json"
+        flags: "https://gist.githubusercontent.com/dwayne/ff832ab1d4a0bf81585870369f984ebc/raw/053e75b301644239ed4c5422e8af42363b6ba967/quotes.json"
       });
     </script>
   </body>
