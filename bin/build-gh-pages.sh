@@ -3,12 +3,12 @@
 set -e
 
 build_dir=.build
+root_dir=elm-random-quote-machine
 static_dir=static
 
 tmp_dir=$(mktemp -d)
 
 echo "[HTML]"
-root_dir=elm-random-quote-machine
 sed "s/{{ROOT}}/\/$root_dir/" $static_dir/index.html > $tmp_dir/index.html
 
 echo "[CSS]"
