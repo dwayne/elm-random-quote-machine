@@ -1,0 +1,21 @@
+@use "colors";
+
+.button {
+  border: 0;
+  border-radius: 3px;
+  padding: 0 15px;
+  height: 30px;
+  white-space: nowrap;
+  cursor: pointer;
+
+  background-color: colors.$nightRider;
+  color: colors.$white;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.button:active {
+  transform: scale(0.95);
+}

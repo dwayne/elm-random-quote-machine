@@ -1,0 +1,23 @@
+.layout {
+  height: 100%;
+  overflow: auto;
+}
+
+.layout__main {
+  display: inline-block;
+  padding: 20px;
+}
+
+@media screen and (min-width: 590px) {
+  .layout {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media screen and (min-height: 720px) {
+  .layout {
+    display: flex;
+    align-items: center;
+  }
+}

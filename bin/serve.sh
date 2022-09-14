@@ -2,6 +2,6 @@
 
 set -e
 
-port="${1:-3000}"
+port="${1:-8000}"
 
-caddy file-server --browse --root .build --listen :"$port"
+caddy file-server --browse --root "$PROJECT/.build" --listen :"$port"

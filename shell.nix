@@ -7,5 +7,8 @@ pkgs.mkShell {
     pkgs.caddy
     pkgs.elmPackages.elm
     pkgs.nodePackages.uglify-js
+    pkgs.nodejs-16_x
   ];
+
+  PROJECT = builtins.toString ./.;
 }

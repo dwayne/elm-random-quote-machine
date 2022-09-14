@@ -1,0 +1,13 @@
+@use "fonts";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: fonts.$raleway;
+  font-weight: 400;
+  font-size: 1em;
+}
