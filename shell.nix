@@ -11,4 +11,5 @@ pkgs.mkShell {
   ];
 
   PROJECT = builtins.toString ./.;
+  PROTOTYPE = builtins.toString ./prototype;
 }
