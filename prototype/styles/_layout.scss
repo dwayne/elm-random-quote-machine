@@ -1,6 +1,14 @@
+@use "transitions";
+
+.body {
+  margin: 0;
+  height: 100vh;
+}
+
 .layout {
   height: 100%;
   overflow: auto;
+  transition: transitions.$backgroundColor;
 }
 
 .layout__main {

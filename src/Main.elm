@@ -119,51 +119,65 @@ generateNewSelection quotes colors =
 
 view : Model -> H.Html Msg
 view { selection } =
-  viewCentral selection.color <|
-    viewColumn
-      [ H.main_ []
-          [ viewCard
-              { top = viewQuote selection
-              , bottom =
-                  viewActions
-                    [ viewButtonLink Twitter selection
-                    , viewButtonLink Tumblr selection
-                    , viewButton selection.color ClickedNewQuote "New quote"
-                    ]
-              }
-          ]
-      , H.footer []
-          [ viewAttribution ]
-      ]
+  viewLayout selection.color <|
+    viewMain
+      { card =
+          viewCard
+            { quote = viewQuote selection
+            , actions =
+                viewActions
+                  [ viewIconButton Twitter selection
+                  , viewIconButton Tumblr selection
+                  , viewButton
+                      { backgroundColor = selection.color
+                      , onClick = ClickedNewQuote
+                      , title = "Select a new random quote to display"
+                      , text = "New quote"
+                      }
+                  ]
+            }
+      , attribution =
+          viewAttribution
+            { name = "dwayne"
+            , url = "https://github.com/dwayne"
+            }
+      }
 
 
-viewCentral : Color -> H.Html msg -> H.Html msg
-viewCentral backgroundColor body =
+viewLayout : Color -> H.Html msg -> H.Html msg
+viewLayout backgroundColor body =
   H.div
-    [ HA.class "central"
+    [ HA.class "layout"
     , HA.style "background-color" backgroundColor
     ]
-    [ H.div
-        [ HA.class "central__wrapper" ]
-        [ body ]
+    [ H.div [ HA.class "layout__wrapper" ]
+        [ H.div [ HA.class "layout__main" ]
+            [ body ]
+        ]
     ]
 
 
-viewColumn : List (H.Html msg) -> H.Html msg
-viewColumn =
-  H.div [ HA.class "column" ]
+viewMain :
+  { card : H.Html msg
+  , attribution : H.Html msg
+  }
+  -> H.Html msg
+viewMain { card, attribution } =
+  H.main_ [ HA.class "main" ]
+    [ H.div [ HA.class "main__card" ] [ card ]
+    , H.div [ HA.class "main__attribution" ] [ attribution ]
+    ]
 
 
-viewCard : { top : H.Html msg, bottom: H.Html msg } -> H.Html msg
-viewCard { top, bottom } =
-  H.div
-    [ HA.class "card" ]
-    [ H.div
-        [ HA.class "card__top" ]
-        [ top ]
-    , H.div
-        [ HA.class "card__bottom" ]
-        [ bottom ]
+viewCard :
+  { quote : H.Html msg
+  , actions : H.Html msg
+  }
+  -> H.Html msg
+viewCard { quote, actions } =
+  H.div [ HA.class "card" ]
+    [ H.div [ HA.class "card__quote" ] [ quote ]
+    , H.div [ HA.class "card__actions" ] [ actions ]
     ]
 
 
@@ -197,11 +211,11 @@ viewActions : List (H.Html msg) -> H.Html msg
 viewActions actions =
   let
     viewAction action =
-      H.li [ HA.class "actions__action" ] [ action ]
+      H.div [ HA.class "actions__action" ] [ action ]
   in
   actions
     |> List.map viewAction
-    |> H.ul [ HA.class "actions" ]
+    |> H.div [ HA.class "actions" ]
 
 
 type SocialMedia
@@ -209,25 +223,28 @@ type SocialMedia
   | Tumblr
 
 
-viewButtonLink : SocialMedia -> Selection -> H.Html msg
-viewButtonLink socialMedia { quote, color } =
+viewIconButton : SocialMedia -> Selection -> H.Html msg
+viewIconButton socialMedia { quote, color } =
   let
-    (name, url) =
+    (name, title, url) =
       case socialMedia of
         Twitter ->
           ( "twitter"
+          , "Twitter"
           , twitterUrl quote
           )
 
         Tumblr ->
           ( "tumblr"
+          , "Tumblr"
           , tumblrUrl quote
           )
   in
   H.a
     [ HA.href url
     , HA.target "_blank"
-    , HA.class "button"
+    , HA.title <| "Share on " ++ title
+    , HA.class "icon-button"
     , HA.style "background-color" color
     ]
     [ H.i [ HA.class <| "fab fa-" ++ name ] [] ]
@@ -257,26 +274,37 @@ tumblrUrl { text, author } =
     ]
 
 
-viewButton : Color -> msg -> String -> H.Html msg
-viewButton backgroundColor onClick text =
+viewButton :
+  { backgroundColor : Color
+  , onClick : msg
+  , title : String
+  , text : String
+  }
+  -> H.Html msg
+viewButton { backgroundColor, onClick, title, text } =
   H.button
     [ HA.class "button"
+    , HA.title title
     , HA.style "background-color" backgroundColor
     , HE.onClick onClick
     ]
     [ H.text text ]
 
 
-viewAttribution : H.Html msg
-viewAttribution =
+viewAttribution :
+  { name : String
+  , url : String
+  }
+  -> H.Html msg
+viewAttribution { name, url } =
   H.p
     [ HA.class "attribution" ]
     [ H.text "by "
     , H.a
-        [ HA.href "https://github.com/dwayne"
+        [ HA.href url
         , HA.class "attribution__link"
         ]
-        [ H.text "dwayne" ]
+        [ H.text name ]
     ]
 
 

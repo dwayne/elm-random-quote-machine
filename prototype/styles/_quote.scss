@@ -1,4 +1,5 @@
 @use "colors";
+@use "transitions";
 
 .quote {
   margin: 0;
@@ -8,6 +9,7 @@
   max-width: 450px;
 
   color: colors.$nightRider;
+  transition: transitions.$color;
 }
 
 .quote__content {

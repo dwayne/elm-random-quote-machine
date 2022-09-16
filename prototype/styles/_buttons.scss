@@ -1,4 +1,5 @@
 @use "colors";
+@use "transitions";
 
 %button {
   border-radius: 3px;
@@ -7,6 +8,8 @@
 
   background-color: colors.$nightRider;
   color: colors.$white;
+
+  transition: transitions.$backgroundColor;
 
   &:hover {
     opacity: 0.9;
