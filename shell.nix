@@ -1,15 +1,18 @@
 {
-  pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/b42e50fe36242b1b205a7d501b7911d698218086.tar.gz") {}
+  pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/8de22cec9b51d6fdce55480688c67dbe6f33dd34.tar.gz") {}
 }:
 
 pkgs.mkShell {
   buildInputs = [
     pkgs.caddy
     pkgs.elmPackages.elm
+    pkgs.nodePackages.sass
     pkgs.nodePackages.uglify-js
-    pkgs.nodejs-16_x
   ];
 
-  PROJECT = builtins.toString ./.;
-  PROTOTYPE = builtins.toString ./prototype;
+  shellHook =
+    ''
+    export project=${builtins.toString ./.}
+    export prototype="$project/prototype"
+    '';
 }

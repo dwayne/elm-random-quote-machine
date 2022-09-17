@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-caddy file-server --browse --root "$PROTOTYPE" --listen :"${1:-8000}"
+port="${1:-8000}"
+
+caddy file-server --browse --root "$prototype" --listen :"$port"
