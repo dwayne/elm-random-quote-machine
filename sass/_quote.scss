@@ -1,0 +1,37 @@
+@use "colors";
+@use "transitions";
+
+.quote {
+  margin: 0;
+
+  box-sizing: content-box;
+  min-width: 300px;
+  max-width: 450px;
+
+  color: colors.$nightRider;
+  transition: transitions.$color;
+}
+
+.quote__content {
+  margin: 0;
+  margin-bottom: 30px;
+}
+
+.quote__text {
+  margin: 0;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.quote__mark {
+  margin-right: 12px;
+}
+
+.quote__attribution {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.quote__author {
+  font-style: italic;
+}

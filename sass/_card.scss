@@ -1,0 +1,12 @@
+@use "colors";
+
+.card {
+  display: inline-block;
+  padding: 40px 50px;
+  border-radius: 3px;
+  background-color: colors.$white;
+}
+
+.card__quote {
+  margin-bottom: 30px;
+}
