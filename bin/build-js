@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "Building JS..."
+
+tmp=$(mktemp -d)
+
+main="$project/src/Main.elm"
+js="$tmp/app.js"
+
+if [[ "$env" == "gh-pages" ]]; then
+  target="$build/$name"
+
+  elm make "$main" --optimize --output="$js"
+
+  min="$tmp/app.min.js"
+
+  uglifyjs "$js" --compress 'pure_funcs="F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9",pure_getters,keep_fargs=false,unsafe_comps,unsafe' | uglifyjs --mangle --output "$min"
+
+  mv "$min" "$js"
+else
+  target="$build"
+
+  elm make "$main" --debug --output="$js"
+fi
+
+mkdir -p "$target"
+cp "$js" "$target/app.js"
+
+echo "Done JS!"

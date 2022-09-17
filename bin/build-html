@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "Building HTML..."
+
+if [[ "$env" == "gh-pages" ]]; then
+  target="$build/$name"
+  root="/$name"
+else
+  target="$build"
+  root=""
+fi
+
+mkdir -p "$target"
+sed "s|{{ROOT}}|$root|" "$project/html/index.html" > "$target/index.html"
+
+echo "Done HTML!"

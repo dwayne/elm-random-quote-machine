@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "Building CSS..."
+
+if [[ "$env" == "gh-pages" ]]; then
+  target="$build/$name"
+  args="--style=compressed --no-source-map"
+else
+  target="$build"
+  args=""
+fi
+
+mkdir -p "$target"
+
+sass $args "$project/sass/index.scss" "$target/index.css"
+
+echo "Done CSS!"

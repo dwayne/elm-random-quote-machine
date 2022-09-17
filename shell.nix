@@ -12,8 +12,12 @@ pkgs.mkShell {
 
   shellHook =
     ''
+    export name="elm-random-quote-machine"
+
     export project=${builtins.toString ./.}
     export build="$project/.build"
     export prototype="$project/prototype"
+
+    export PATH="$project/bin:$PATH"
     '';
 }
