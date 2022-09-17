@@ -13,6 +13,7 @@ pkgs.mkShell {
   shellHook =
     ''
     export project=${builtins.toString ./.}
+    export build="$project/.build"
     export prototype="$project/prototype"
     '';
 }
