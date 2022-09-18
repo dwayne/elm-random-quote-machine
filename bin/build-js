@@ -4,14 +4,14 @@ set -e
 
 echo "Building JS..."
 
-tmp=$(mktemp -d)
+. init
 
 main="$project/src/Main.elm"
+
+tmp=$(mktemp -d)
 js="$tmp/app.js"
 
-if [[ "$env" == "gh-pages" ]]; then
-  target="$build/$name"
-
+if [[ -v optimize ]]; then
   elm make "$main" --optimize --output="$js"
 
   min="$tmp/app.min.js"
@@ -20,12 +20,9 @@ if [[ "$env" == "gh-pages" ]]; then
 
   mv "$min" "$js"
 else
-  target="$build"
-
   elm make "$main" --debug --output="$js"
 fi
 
-mkdir -p "$target"
-cp "$js" "$target/app.js"
+cp "$js" "$dest/app.js"
 
 echo "Done JS!"

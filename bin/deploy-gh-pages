@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e
+
+export subdir=elm-random-quote-machine
+
+. init
+
+optimize=1 build
+
+echo "Deploying..."
+
+branch=gh-pages
+tmp=$(mktemp -d)
+
+git worktree add "$tmp" "$branch"
+
+cp -r "$dest"/* "$tmp"
+
+git -C "$tmp" add .
+
+hash="$(git log -n 1 --format='%h' master)"
+message="Site updated to $hash"
+
+if git -C "$tmp" commit -m "$message"; then
+  git -C "$tmp" push -u origin HEAD
+fi
+
+git worktree remove --force "$tmp"
+
+echo "Deployed!"

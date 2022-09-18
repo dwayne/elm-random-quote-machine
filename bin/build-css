@@ -4,16 +4,14 @@ set -e
 
 echo "Building CSS..."
 
-if [[ "$env" == "gh-pages" ]]; then
-  target="$build/$name"
+. init
+
+if [[ -v optimize ]]; then
   args="--style=compressed --no-source-map"
 else
-  target="$build"
   args=""
 fi
 
-mkdir -p "$target"
-
-sass $args "$project/sass/index.scss" "$target/index.css"
+sass $args "$project/sass/index.scss" "$dest/index.css"
 
 echo "Done CSS!"
