@@ -2,6 +2,6 @@
 
 set -e
 
-for clean in $(find "$project" -name clean -type f); do
+for clean in $(find "$project" -name clean -o -name clean.sh -type f); do
   $clean
 done
