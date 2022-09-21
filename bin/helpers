@@ -46,7 +46,7 @@ function build_css {
   if [[ -v optimize ]]; then
     local args="--style=compressed --no-source-map"
   else
-    local args=""
+    local args="--embed-sources"
   fi
   sass $args "$project/sass/index.scss" "$dest/index.css"
 
