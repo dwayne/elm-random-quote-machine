@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-root="${subdir:+/$subdir}"
-dest="$build$root"
-
-mkdir -p "$dest"
