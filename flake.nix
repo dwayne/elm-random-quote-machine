@@ -22,7 +22,7 @@
             elm-review
             elm-test
             pkgs.caddy
-            pkgs.sass
+            pkgs.dart-sass
             pkgs.shellcheck
             pkgs.terser
           ];
