@@ -1,9 +1,12 @@
 @use "colors";
 
 .card {
-  display: inline-block;
-  padding: 40px 50px;
+  box-sizing: border-box;
+  min-width: 400px;
+  max-width: 550px;
+
   border-radius: 3px;
+  padding: 20px 25px;
   background-color: colors.$white;
 }
 
