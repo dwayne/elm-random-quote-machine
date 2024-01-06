@@ -14,29 +14,7 @@ main =
             , author = "Oprah Winfrey"
             }
     in
-    H.div []
-        [ H.h1 [] [ H.text "Buttons" ]
-        , H.h2 [] [ H.text "Button" ]
-        , H.p []
-            [ viewButton
-                { text = "New quote"
-                , title = "Select a new random quote to display"
-                }
-            ]
-        , H.h2 [] [ H.text "Icon Button" ]
-        , H.p []
-            [ viewIconButton
-                { icon = Twitter
-                , quote = quote
-                }
-            ]
-        , H.p []
-            [ viewIconButton
-                { icon = Tumblr
-                , quote = quote
-                }
-            ]
-        ]
+    viewActions quote
 
 
 -- QUOTE
@@ -141,3 +119,30 @@ tumblrUrl { text, author } =
     , UB.string "caption" author
     , UB.string "canonicalUrl" "https://www.tumblr.com/docs/en/share_button"
     ]
+
+
+-- ACTIONS
+
+
+viewActions : Quote -> H.Html msg
+viewActions quote =
+    H.ul [ HA.class "actions" ]
+        [ H.li []
+            [ viewIconButton
+                { icon = Twitter
+                , quote = quote
+                }
+            ]
+        , H.li []
+            [ viewIconButton
+                { icon = Tumblr
+                , quote = quote
+                }
+            ]
+        , H.li []
+            [ viewButton
+                { text = "New quote"
+                , title = "Select a new random quote to display"
+                }
+            ]
+        ]
