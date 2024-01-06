@@ -1,11 +1,16 @@
 .actions {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+
   display: flex;
 }
 
-.actions__action:not(:last-child) {
+.actions > li {
   margin-right: 10px;
 }
 
-.actions__action:last-child {
+.actions > li:last-child {
+  margin-right: 0;
   margin-left: auto;
 }
