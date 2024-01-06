@@ -3,10 +3,17 @@ module Main exposing (main)
 
 import Html as H
 import Html.Attributes as HA
+import Url.Builder as UB
 
 
 main : H.Html msg
 main =
+    let
+        quote =
+            { text = "You become what you believe."
+            , author = "Oprah Winfrey"
+            }
+    in
     H.div []
         [ H.h1 [] [ H.text "Buttons" ]
         , H.h2 [] [ H.text "Button" ]
@@ -17,8 +24,18 @@ main =
                 }
             ]
         , H.h2 [] [ H.text "Icon Button" ]
-        , H.p [] [ viewIconButton Twitter ]
-        , H.p [] [ viewIconButton Tumblr ]
+        , H.p []
+            [ viewIconButton
+                { icon = Twitter
+                , quote = quote
+                }
+            ]
+        , H.p []
+            [ viewIconButton
+                { icon = Tumblr
+                , quote = quote
+                }
+            ]
         ]
 
 
@@ -76,20 +93,20 @@ type Icon
     | Tumblr
 
 
-viewIconButton : Icon -> H.Html msg
-viewIconButton icon =
+viewIconButton : IconButtonOptions -> H.Html msg
+viewIconButton { icon, quote } =
     let
         { name, url, class } =
             case icon of
                 Twitter ->
                     { name = "Twitter"
-                    , url = "#"
+                    , url = twitterUrl quote
                     , class = "fa-twitter"
                     }
 
                 Tumblr ->
                     { name = "Tumblr"
-                    , url = "#"
+                    , url = tumblrUrl quote
                     , class = "fa-tumblr"
                     }
     in
@@ -100,3 +117,27 @@ viewIconButton icon =
         , HA.title <| "Share on " ++ name
         ]
         [ H.i [ HA.class "fa-brands", HA.class class ] [] ]
+
+
+twitterUrl : Quote -> String
+twitterUrl { text, author } =
+  let
+    tweet = "\"" ++ text ++ "\" ~ " ++ author
+  in
+    UB.crossOrigin "https://twitter.com"
+      [ "intent", "tweet" ]
+      [ UB.string "hashtags" "quotes"
+      , UB.string "text" tweet
+      ]
+
+
+tumblrUrl : Quote -> String
+tumblrUrl { text, author } =
+  UB.crossOrigin "https://www.tumblr.com"
+    [ "widgets", "share", "tool" ]
+    [ UB.string "posttype" "quote"
+    , UB.string "tags" "quotes"
+    , UB.string "content" text
+    , UB.string "caption" author
+    , UB.string "canonicalUrl" "https://www.tumblr.com/docs/en/share_button"
+    ]
