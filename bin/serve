@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+#
+# USAGE: serve [8000]
+#
+
+set -euo pipefail
+
 port="${1:-8000}"
 
-caddy file-server --browse --root "$build" --listen :"$port"
+caddy file-server --browse --listen :"$port" --root "${build:?}/elm-random-quote-machine"

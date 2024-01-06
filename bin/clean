@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
+#
+# USAGE: clean
+#
+
+set -euo pipefail
+
 rm -rf "$build" "$project/elm-stuff"
