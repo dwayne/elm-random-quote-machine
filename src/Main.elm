@@ -14,7 +14,14 @@ main =
             , author = "Oprah Winfrey"
             }
     in
-    viewCard quote
+    H.div []
+        [ viewCard quote
+        , viewAttribution
+            { name = "Dwayne Crooks"
+            , username = "dwayne"
+            , url = "https://github.com/dwayne"
+            }
+        ]
 
 
 -- QUOTE
@@ -157,4 +164,29 @@ viewCard quote =
         [ HA.class "card" ]
         [ H.div [ HA.class "card__quote" ] [ viewQuote quote ]
         , H.div [ HA.class "card__actions" ] [ viewActions quote ]
+        ]
+
+
+-- ATTRIBUTION
+
+
+type alias Attribution =
+    { name : String
+    , username : String
+    , url : String
+    }
+
+
+viewAttribution : Attribution -> H.Html msg
+viewAttribution { name, username, url } =
+    H.p
+        [ HA.class "attribution" ]
+        [ H.text "by "
+        , H.a
+            [ HA.class "attribution__link"
+            , HA.href url
+            , HA.target "_blank"
+            , HA.title <| "Developed by " ++ name
+            ]
+            [ H.text username ]
         ]
