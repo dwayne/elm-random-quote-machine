@@ -1,6 +1,5 @@
 module Main exposing (main)
 
-
 import Html as H
 import Html.Attributes as HA
 import Url.Builder as UB
@@ -13,15 +12,15 @@ main =
             { text = "You become what you believe."
             , author = "Oprah Winfrey"
             }
-    in
-    H.div []
-        [ viewCard quote
-        , viewAttribution
+
+        attribution =
             { name = "Dwayne Crooks"
             , username = "dwayne"
             , url = "https://github.com/dwayne"
             }
-        ]
+    in
+    viewApp quote attribution
+
 
 
 -- QUOTE
@@ -46,7 +45,8 @@ viewQuote { text, author } =
 
 mdash : String
 mdash =
-    "\u{2014}"
+    "—"
+
 
 
 -- BUTTONS
@@ -106,26 +106,28 @@ viewIconButton { icon, quote } =
 
 twitterUrl : Quote -> String
 twitterUrl { text, author } =
-  let
-    tweet = "\"" ++ text ++ "\" ~ " ++ author
-  in
+    let
+        tweet =
+            "\"" ++ text ++ "\" ~ " ++ author
+    in
     UB.crossOrigin "https://twitter.com"
-      [ "intent", "tweet" ]
-      [ UB.string "hashtags" "quotes"
-      , UB.string "text" tweet
-      ]
+        [ "intent", "tweet" ]
+        [ UB.string "hashtags" "quotes"
+        , UB.string "text" tweet
+        ]
 
 
 tumblrUrl : Quote -> String
 tumblrUrl { text, author } =
-  UB.crossOrigin "https://www.tumblr.com"
-    [ "widgets", "share", "tool" ]
-    [ UB.string "posttype" "quote"
-    , UB.string "tags" "quotes"
-    , UB.string "content" text
-    , UB.string "caption" author
-    , UB.string "canonicalUrl" "https://www.tumblr.com/docs/en/share_button"
-    ]
+    UB.crossOrigin "https://www.tumblr.com"
+        [ "widgets", "share", "tool" ]
+        [ UB.string "posttype" "quote"
+        , UB.string "tags" "quotes"
+        , UB.string "content" text
+        , UB.string "caption" author
+        , UB.string "canonicalUrl" "https://www.tumblr.com/docs/en/share_button"
+        ]
+
 
 
 -- ACTIONS
@@ -155,6 +157,7 @@ viewActions quote =
         ]
 
 
+
 -- CARD
 
 
@@ -165,6 +168,7 @@ viewCard quote =
         [ H.div [ HA.class "card__quote" ] [ viewQuote quote ]
         , H.div [ HA.class "card__actions" ] [ viewActions quote ]
         ]
+
 
 
 -- ATTRIBUTION
@@ -189,4 +193,31 @@ viewAttribution { name, username, url } =
             , HA.title <| "Developed by " ++ name
             ]
             [ H.text username ]
+        ]
+
+
+
+-- APP
+
+
+viewApp : Quote -> Attribution -> H.Html msg
+viewApp quote =
+    viewLayout << viewContent quote
+
+
+viewLayout : H.Html msg -> H.Html msg
+viewLayout content =
+    H.div
+        [ HA.class "layout" ]
+        [ H.div [ HA.class "layout__content" ] [ content ]
+        ]
+
+
+viewContent : Quote -> Attribution -> H.Html msg
+viewContent quote attribution =
+    H.div [ HA.class "content" ]
+        [ H.main_ [ HA.class "content__card" ] [ viewCard quote ]
+        , H.footer
+            [ HA.class "content__attribution" ]
+            [ viewAttribution attribution ]
         ]
