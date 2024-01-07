@@ -14,7 +14,7 @@ main =
             , author = "Oprah Winfrey"
             }
     in
-    viewActions quote
+    viewCard quote
 
 
 -- QUOTE
@@ -145,4 +145,16 @@ viewActions quote =
                 , title = "Select a new random quote to display"
                 }
             ]
+        ]
+
+
+-- CARD
+
+
+viewCard : Quote -> H.Html msg
+viewCard quote =
+    H.div
+        [ HA.class "card" ]
+        [ H.div [ HA.class "card__quote" ] [ viewQuote quote ]
+        , H.div [ HA.class "card__actions" ] [ viewActions quote ]
         ]
