@@ -1,17 +1,20 @@
 module Main exposing (main)
 
+import API
 import Browser
 import Html as H
 import Html.Attributes as HA
+import Http
 import NonEmptyList exposing (NonEmptyList)
+import Quote exposing (Quote)
 import Url.Builder as UB
 
 
-main : Program () Model msg
+main : Program String Model Msg
 main =
     Browser.element
         { init = init
-        , update = \_ model -> ( model, Cmd.none )
+        , update = update
         , subscriptions = always Sub.none
         , view = view
         }
@@ -26,17 +29,11 @@ type alias Model =
     }
 
 
-type alias Quote =
-    { text : String
-    , author : String
-    }
-
-
-init : () -> ( Model, Cmd msg )
-init _ =
+init : String -> ( Model, Cmd Msg )
+init url =
     ( { quotes = defaultQuotes
       }
-    , Cmd.none
+    , API.getQuotes GotQuotes url
     )
 
 
@@ -59,6 +56,35 @@ defaultQuotes =
           , author = "James Clear"
           }
         ]
+
+
+
+-- UPDATE
+
+
+type Msg
+    = GotQuotes (Result Http.Error (List Quote))
+
+
+update : Msg -> Model -> ( Model, Cmd msg )
+update msg model =
+    case msg of
+        GotQuotes (Ok quotes) ->
+            case quotes of
+                quote :: restQuotes ->
+                    ( { model | quotes = NonEmptyList.fromList quote restQuotes }
+                    , Cmd.none
+                    )
+
+                [] ->
+                    ( model
+                    , Cmd.none
+                    )
+
+        GotQuotes (Err _) ->
+            ( model
+            , Cmd.none
+            )
 
 
 
