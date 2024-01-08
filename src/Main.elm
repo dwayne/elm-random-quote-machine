@@ -23,6 +23,46 @@ main =
 
 
 
+-- APP
+
+
+viewApp : Quote -> Attribution -> H.Html msg
+viewApp quote =
+    viewLayout << viewContent quote
+
+
+viewLayout : H.Html msg -> H.Html msg
+viewLayout content =
+    H.div
+        [ HA.class "layout" ]
+        [ H.div [ HA.class "layout__content" ] [ content ]
+        ]
+
+
+viewContent : Quote -> Attribution -> H.Html msg
+viewContent quote attribution =
+    H.div [ HA.class "content" ]
+        [ H.main_ [ HA.class "content__card" ] [ viewCard quote ]
+        , H.footer
+            [ HA.class "content__attribution" ]
+            [ viewAttribution attribution ]
+        ]
+
+
+
+-- CARD
+
+
+viewCard : Quote -> H.Html msg
+viewCard quote =
+    H.div
+        [ HA.class "card" ]
+        [ H.div [ HA.class "card__quote" ] [ viewQuote quote ]
+        , H.div [ HA.class "card__actions" ] [ viewActions quote ]
+        ]
+
+
+
 -- QUOTE
 
 
@@ -46,6 +86,34 @@ viewQuote { text, author } =
 mdash : String
 mdash =
     "—"
+
+
+
+-- ACTIONS
+
+
+viewActions : Quote -> H.Html msg
+viewActions quote =
+    H.ul [ HA.class "actions" ]
+        [ H.li []
+            [ viewIconButton
+                { icon = Twitter
+                , quote = quote
+                }
+            ]
+        , H.li []
+            [ viewIconButton
+                { icon = Tumblr
+                , quote = quote
+                }
+            ]
+        , H.li []
+            [ viewButton
+                { text = "New quote"
+                , title = "Select a new random quote to display"
+                }
+            ]
+        ]
 
 
 
@@ -130,47 +198,6 @@ tumblrUrl { text, author } =
 
 
 
--- ACTIONS
-
-
-viewActions : Quote -> H.Html msg
-viewActions quote =
-    H.ul [ HA.class "actions" ]
-        [ H.li []
-            [ viewIconButton
-                { icon = Twitter
-                , quote = quote
-                }
-            ]
-        , H.li []
-            [ viewIconButton
-                { icon = Tumblr
-                , quote = quote
-                }
-            ]
-        , H.li []
-            [ viewButton
-                { text = "New quote"
-                , title = "Select a new random quote to display"
-                }
-            ]
-        ]
-
-
-
--- CARD
-
-
-viewCard : Quote -> H.Html msg
-viewCard quote =
-    H.div
-        [ HA.class "card" ]
-        [ H.div [ HA.class "card__quote" ] [ viewQuote quote ]
-        , H.div [ HA.class "card__actions" ] [ viewActions quote ]
-        ]
-
-
-
 -- ATTRIBUTION
 
 
@@ -193,31 +220,4 @@ viewAttribution { name, username, url } =
             , HA.title <| "Developed by " ++ name
             ]
             [ H.text username ]
-        ]
-
-
-
--- APP
-
-
-viewApp : Quote -> Attribution -> H.Html msg
-viewApp quote =
-    viewLayout << viewContent quote
-
-
-viewLayout : H.Html msg -> H.Html msg
-viewLayout content =
-    H.div
-        [ HA.class "layout" ]
-        [ H.div [ HA.class "layout__content" ] [ content ]
-        ]
-
-
-viewContent : Quote -> Attribution -> H.Html msg
-viewContent quote attribution =
-    H.div [ HA.class "content" ]
-        [ H.main_ [ HA.class "content__card" ] [ viewCard quote ]
-        , H.footer
-            [ HA.class "content__attribution" ]
-            [ viewAttribution attribution ]
         ]
