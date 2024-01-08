@@ -4,9 +4,11 @@ import API
 import Browser
 import Html as H
 import Html.Attributes as HA
+import Html.Events as HE
 import Http
 import NonEmptyList exposing (NonEmptyList)
 import Quote exposing (Quote)
+import Random
 import Url.Builder as UB
 
 
@@ -26,12 +28,18 @@ main =
 
 type alias Model =
     { quotes : NonEmptyList Quote
+    , selection : Quote
     }
 
 
 init : String -> ( Model, Cmd Msg )
 init url =
-    ( { quotes = defaultQuotes
+    let
+        quotes =
+            defaultQuotes
+    in
+    ( { quotes = quotes
+      , selection = NonEmptyList.head quotes
       }
     , API.getQuotes GotQuotes url
     )
@@ -64,9 +72,11 @@ defaultQuotes =
 
 type Msg
     = GotQuotes (Result Http.Error (List Quote))
+    | ClickedNewQuote
+    | GotNewSelection Quote
 
 
-update : Msg -> Model -> ( Model, Cmd msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GotQuotes (Ok quotes) ->
@@ -86,16 +96,31 @@ update msg model =
             , Cmd.none
             )
 
+        ClickedNewQuote ->
+            ( model
+            , generateNewSelection model.quotes
+            )
+
+        GotNewSelection selection ->
+            ( { model | selection = selection }
+            , Cmd.none
+            )
+
+
+generateNewSelection : NonEmptyList Quote -> Cmd Msg
+generateNewSelection =
+    Random.generate GotNewSelection << NonEmptyList.uniform
+
 
 
 -- VIEW
 
 
-view : Model -> H.Html msg
-view { quotes } =
+view : Model -> H.Html Msg
+view model =
     let
         quote =
-            NonEmptyList.head quotes
+            model.selection
 
         attribution =
             { name = "Dwayne Crooks"
@@ -110,7 +135,7 @@ view { quotes } =
 -- APP
 
 
-viewApp : Quote -> Attribution -> H.Html msg
+viewApp : Quote -> Attribution -> H.Html Msg
 viewApp quote =
     viewLayout << viewContent quote
 
@@ -123,7 +148,7 @@ viewLayout content =
         ]
 
 
-viewContent : Quote -> Attribution -> H.Html msg
+viewContent : Quote -> Attribution -> H.Html Msg
 viewContent quote attribution =
     H.div [ HA.class "content" ]
         [ H.main_ [ HA.class "content__card" ] [ viewCard quote ]
@@ -137,7 +162,7 @@ viewContent quote attribution =
 -- CARD
 
 
-viewCard : Quote -> H.Html msg
+viewCard : Quote -> H.Html Msg
 viewCard quote =
     H.div
         [ HA.class "card" ]
@@ -170,7 +195,7 @@ mdash =
 -- ACTIONS
 
 
-viewActions : Quote -> H.Html msg
+viewActions : Quote -> H.Html Msg
 viewActions quote =
     H.ul [ HA.class "actions" ]
         [ H.li []
@@ -189,6 +214,7 @@ viewActions quote =
             [ viewButton
                 { text = "New quote"
                 , title = "Select a new random quote to display"
+                , onClick = ClickedNewQuote
                 }
             ]
         ]
@@ -198,17 +224,19 @@ viewActions quote =
 -- BUTTONS
 
 
-type alias ButtonOptions =
+type alias ButtonOptions msg =
     { text : String
     , title : String
+    , onClick : msg
     }
 
 
-viewButton : ButtonOptions -> H.Html msg
-viewButton { text, title } =
+viewButton : ButtonOptions msg -> H.Html msg
+viewButton { text, title, onClick } =
     H.button
         [ HA.class "button"
         , HA.title title
+        , HE.onClick onClick
         ]
         [ H.text text ]
 
