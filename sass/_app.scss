@@ -1,7 +1,10 @@
+@use "transitions";
+
 .body {
   margin: 0;
 
   background-color: var(--primary-color);
+  transition: transitions.$backgroundColor;
 }
 
 .layout {

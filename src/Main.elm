@@ -16,9 +16,9 @@ main : Program String Model Msg
 main =
     Browser.element
         { init = init
+        , view = view
         , update = update
         , subscriptions = always Sub.none
-        , view = view
         }
 
 
@@ -28,7 +28,18 @@ main =
 
 type alias Model =
     { quotes : NonEmptyList Quote
-    , selection : Quote
+    , colors : NonEmptyList Color
+    , selection : Selection
+    }
+
+
+type alias Color =
+    String
+
+
+type alias Selection =
+    { quote : Quote
+    , color : Color
     }
 
 
@@ -37,11 +48,21 @@ init url =
     let
         quotes =
             defaultQuotes
+
+        colors =
+            defaultColors
     in
     ( { quotes = quotes
-      , selection = NonEmptyList.head quotes
+      , colors = colors
+      , selection =
+            { quote = NonEmptyList.head quotes
+            , color = NonEmptyList.head colors
+            }
       }
-    , API.getQuotes GotQuotes url
+    , Cmd.batch
+        [ generateNewSelection quotes colors
+        , API.getQuotes GotQuotes url
+        ]
     )
 
 
@@ -66,6 +87,24 @@ defaultQuotes =
         ]
 
 
+defaultColors : NonEmptyList Color
+defaultColors =
+    NonEmptyList.fromList
+        "#16a085"
+        [ "#27ae60"
+        , "#2c3e50"
+        , "#f39c12"
+        , "#e74c3c"
+        , "#9b59b6"
+        , "#fb6964"
+        , "#342224"
+        , "#472e32"
+        , "#bdbb99"
+        , "#77b1a9"
+        , "#73a857"
+        ]
+
+
 
 -- UPDATE
 
@@ -73,7 +112,7 @@ defaultQuotes =
 type Msg
     = GotQuotes (Result Http.Error (List Quote))
     | ClickedNewQuote
-    | GotNewSelection Quote
+    | GotNewSelection Selection
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -98,7 +137,7 @@ update msg model =
 
         ClickedNewQuote ->
             ( model
-            , generateNewSelection model.quotes
+            , generateNewSelection model.quotes model.colors
             )
 
         GotNewSelection selection ->
@@ -107,9 +146,12 @@ update msg model =
             )
 
 
-generateNewSelection : NonEmptyList Quote -> Cmd Msg
-generateNewSelection =
-    Random.generate GotNewSelection << NonEmptyList.uniform
+generateNewSelection : NonEmptyList Quote -> NonEmptyList Color -> Cmd Msg
+generateNewSelection quotes colors =
+    Random.generate GotNewSelection <|
+        Random.map2 Selection
+            (NonEmptyList.uniform quotes)
+            (NonEmptyList.uniform colors)
 
 
 
@@ -117,28 +159,23 @@ generateNewSelection =
 
 
 view : Model -> H.Html Msg
-view model =
+view { selection } =
     let
-        ( quote, color ) =
-            ( model.selection
-            , "#3cb371"
-            )
-
         attribution =
             { name = "Dwayne Crooks"
             , username = "dwayne"
             , url = "https://github.com/dwayne"
             }
     in
-    viewApp quote color attribution
+    viewApp selection attribution
 
 
 
 -- APP
 
 
-viewApp : Quote -> String -> Attribution -> H.Html Msg
-viewApp quote color =
+viewApp : Selection -> Attribution -> H.Html Msg
+viewApp { quote, color } =
     viewLayout color << viewContent quote
 
 
