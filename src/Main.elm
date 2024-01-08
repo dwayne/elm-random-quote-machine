@@ -119,8 +119,10 @@ generateNewSelection =
 view : Model -> H.Html Msg
 view model =
     let
-        quote =
-            model.selection
+        ( quote, color ) =
+            ( model.selection
+            , "#3cb371"
+            )
 
         attribution =
             { name = "Dwayne Crooks"
@@ -128,24 +130,32 @@ view model =
             , url = "https://github.com/dwayne"
             }
     in
-    viewApp quote attribution
+    viewApp quote color attribution
 
 
 
 -- APP
 
 
-viewApp : Quote -> Attribution -> H.Html Msg
-viewApp quote =
-    viewLayout << viewContent quote
+viewApp : Quote -> String -> Attribution -> H.Html Msg
+viewApp quote color =
+    viewLayout color << viewContent quote
 
 
-viewLayout : H.Html msg -> H.Html msg
-viewLayout content =
+viewLayout : String -> H.Html msg -> H.Html msg
+viewLayout color content =
     H.div
         [ HA.class "layout" ]
-        [ H.div [ HA.class "layout__content" ] [ content ]
+        [ globalCustomProperties [ ( "primary-color", color ) ]
+        , H.div [ HA.class "layout__content" ] [ content ]
         ]
+
+
+globalCustomProperties : List ( String, String ) -> H.Html msg
+globalCustomProperties =
+    List.map (\( name, value ) -> "--" ++ name ++ ": " ++ value ++ ";")
+        >> String.join " "
+        >> (\s -> H.node "style" [] [ H.text <| ":root { " ++ s ++ " }" ])
 
 
 viewContent : Quote -> Attribution -> H.Html Msg
