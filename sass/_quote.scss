@@ -4,7 +4,7 @@
 .quote {
   margin: 0;
 
-  color: colors.$nightRider;
+  color: var(--primary-color);
   transition: transitions.$color;
 }
 

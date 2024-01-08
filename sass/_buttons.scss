@@ -6,8 +6,8 @@
   height: 30px;
   cursor: pointer;
 
-  background-color: colors.$nightRider;
-  color: colors.$white;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
 
   transition: transitions.$backgroundColor;
 

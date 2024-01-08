@@ -4,11 +4,11 @@
   margin: 0;
   text-align: center;
   font-size: 0.8rem;
-  color: colors.$white;
+  color: var(--secondary-color);
 }
 
 .attribution__link {
   text-decoration: none;
   font-weight: 500;
-  color: colors.$white;
+  color: var(--secondary-color);
 }

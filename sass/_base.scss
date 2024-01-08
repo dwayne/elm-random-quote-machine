@@ -1,4 +1,10 @@
+@use "colors";
 @use "fonts";
+
+:root {
+  --primary-color: #{colors.$silverPink};
+  --secondary-color: #{colors.$ghostWhite};
+}
 
 html {
   font-family: fonts.$raleway;
