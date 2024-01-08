@@ -1,17 +1,75 @@
 module Main exposing (main)
 
+import Browser
 import Html as H
 import Html.Attributes as HA
+import NonEmptyList exposing (NonEmptyList)
 import Url.Builder as UB
 
 
-main : H.Html msg
+main : Program () Model msg
 main =
+    Browser.element
+        { init = init
+        , update = \_ model -> ( model, Cmd.none )
+        , subscriptions = always Sub.none
+        , view = view
+        }
+
+
+
+-- MODEL
+
+
+type alias Model =
+    { quotes : NonEmptyList Quote
+    }
+
+
+type alias Quote =
+    { text : String
+    , author : String
+    }
+
+
+init : () -> ( Model, Cmd msg )
+init _ =
+    ( { quotes = defaultQuotes
+      }
+    , Cmd.none
+    )
+
+
+defaultQuotes : NonEmptyList Quote
+defaultQuotes =
+    NonEmptyList.fromList
+        { text = "I am not a product of my circumstances. I am a product of my decisions."
+        , author = "Stephen Covey"
+        }
+        [ { text = "Transferring your passion to your job is far easier than finding a job that happens to match your passion."
+          , author = "Seth Godin"
+          }
+        , { text = "Less mental clutter means more mental resources available for deep thinking."
+          , author = "Cal Newport"
+          }
+        , { text = "How much time he saves who does not look to see what his neighbor says or does or thinks."
+          , author = "Marcus Aurelius"
+          }
+        , { text = "You do not rise to the level of your goals. You fall to the level of your systems."
+          , author = "James Clear"
+          }
+        ]
+
+
+
+-- VIEW
+
+
+view : Model -> H.Html msg
+view { quotes } =
     let
         quote =
-            { text = "You become what you believe."
-            , author = "Oprah Winfrey"
-            }
+            NonEmptyList.head quotes
 
         attribution =
             { name = "Dwayne Crooks"
@@ -64,12 +122,6 @@ viewCard quote =
 
 
 -- QUOTE
-
-
-type alias Quote =
-    { text : String
-    , author : String
-    }
 
 
 viewQuote : Quote -> H.Html msg
