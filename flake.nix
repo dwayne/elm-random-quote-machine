@@ -20,7 +20,6 @@
             elm-format
             elm-optimize-level-2
             elm-review
-            elm-test
             pkgs.caddy
             pkgs.dart-sass
             pkgs.shellcheck
