@@ -6,4 +6,4 @@
 
 set -euo pipefail
 
-rm -rf "$build" "$project/elm-stuff"
+rm -rf "${build:?}" "${project:?}/elm-stuff"
