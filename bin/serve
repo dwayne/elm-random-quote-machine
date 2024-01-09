@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+#
+# Usage: serve
+#
+
+set -euo pipefail
+
+cd "${project:?}" && mdbook serve --open

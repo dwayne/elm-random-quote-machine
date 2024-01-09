@@ -1,0 +1,6 @@
+[book]
+authors = ["Dwayne Crooks"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Random Quote Machine Tutorial"
