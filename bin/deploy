@@ -43,7 +43,7 @@ fi
 # BUILD
 
 
-optimize_css=1 optimize_js=2 build
+build-production
 
 
 # PREPARE DEPLOY DIRECTORY
@@ -74,7 +74,6 @@ message="Site updated to commit $hash from the $current_branch branch"
 if [[ "$simulate" != 0 ]]; then
   echo "$message"
 else
-
   if git -C "$out" diff --quiet; then
     echo "No changes detected."
   else
