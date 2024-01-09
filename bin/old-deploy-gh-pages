@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-subdir=elm-random-quote-machine
-optimize=1
-
-clean && . helpers && init && build_all && deploy_gh_pages
