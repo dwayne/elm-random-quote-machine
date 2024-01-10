@@ -3,6 +3,10 @@
 [Introduction](README.md)
 [Plan](plan.md)
 
+- [Project Setup](setup/README.md)
+  - [Nix](setup/nix.md)
+  - [Bash](setup/bash.md)
+
 # HTML & CSS
 
 - [Decompose](html-css/decompose.md)
@@ -24,6 +28,10 @@
   - [Attribution](elm/translate/attribution.md)
   - [App](elm/translate/app.md)
 - [Build](elm/build/README.md)
-  - [Fetch Quotes](elm/build/fetch_quotes.md)
-  - [New Quote Button](elm/build/new_quote_button.md)
-  - [Change Colors](elm/build/change_colors.md)
+  - [Fetch Quotes](elm/build/fetch-quotes.md)
+  - [New Quote Button](elm/build/new-quote-button.md)
+  - [Change Colors](elm/build/change-colors.md)
+
+# Deploy
+
+- [GitHub Pages](deploy/github-pages.md)

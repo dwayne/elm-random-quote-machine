@@ -3,4 +3,4 @@ authors = ["Dwayne Crooks"]
 language = "en"
 multilingual = false
 src = "src"
-title = "A Guide to Building the Random Quote Machine in Elm"
+title = "A Guide to Building freeCodeCamp's Random Quote Machine using Elm"
