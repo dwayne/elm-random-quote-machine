@@ -6,6 +6,16 @@
 - [Project Setup](setup/README.md)
   - [Nix](setup/nix.md)
   - [Bash](setup/bash.md)
+  - [Tooling](setup/tooling/README.md)
+    - [ShellCheck](setup/tooling/shellcheck.md)
+    - [Caddy](setup/tooling/caddy.md)
+    - [Sass](setup/tooling/sass.md)
+    - [elm-format](setup/tooling/elm-format.md)
+    - [elm-review](setup/tooling/elm-review.md)
+    - [elm-optimize-level-2](setup/tooling/elm-optimize-level-2.md)
+    - [Terser](setup/tooling/terser.md)
+  - [Protoype](setup/prototype.md)
+  - [Application](setup/application.md)
 
 # HTML & CSS
 
