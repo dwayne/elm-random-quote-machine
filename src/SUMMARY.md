@@ -9,7 +9,7 @@
 
 # HTML & CSS
 
-- [Decompose](html-css/decompose.md)
+- [Deconstruct](html-css/deconstruct.md)
 - [Structure and Style](html-css/structure-and-style/README.md)
   - [Quote](html-css/structure-and-style/quote.md)
   - [Buttons](html-css/structure-and-style/buttons.md)
