@@ -10,7 +10,7 @@ optimize_css="${optimize_css:-0}"
 optimize_js="${optimize_js:-0}"
 
 src="${project:?}"
-out="${build:?}/elm-random-quote-machine"
+out="${build:?}/application"
 
 clean () {
   rm -rf "$out"

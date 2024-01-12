@@ -8,4 +8,4 @@ set -euo pipefail
 
 port="${1:-8000}"
 
-caddy file-server --browse --listen :"$port" --root "${build:?}/elm-random-quote-machine"
+caddy file-server --browse --listen :"$port" --root "${build:?}/application"
