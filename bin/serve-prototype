@@ -8,4 +8,5 @@ set -euo pipefail
 
 port="${1:-9000}"
 
-caddy file-server --browse --listen :"$port" --root "${build:?}/prototype"
+xdg-open "http://localhost:$port" && \
+  caddy file-server --browse --listen :"$port" --root "${build:?}/prototype"

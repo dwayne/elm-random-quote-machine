@@ -24,6 +24,7 @@
             pkgs.dart-sass
             pkgs.shellcheck
             pkgs.terser
+            pkgs.xdg-utils
           ];
 
           shellHook =
