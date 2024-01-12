@@ -17,9 +17,11 @@ I will take a bottom-up approach and build the app incrementally from start to f
 I will deconstruct the existing app and rebuild a static version of it in HTML and CSS. This will be done for several reasons:
 
 1. I want to figure out my own structure for the HTML.
-2. I want to write my own CSS.
+2. I want to write my own CSS (via Sass).
 3. I want to show the entire process from when you're only given a design to a finished Elm web application.
 4. I want to solve any structural and styling issues before writing any Elm. I have found that when I do this correctly I only ever have to focus on adding interactivity and business logic when writing the Elm code.
+
+**N.B.** *I refer to the output of this step in the process as the prototype.*
 
 ### Elm
 
@@ -30,6 +32,8 @@ It may seem surprising to you that I didn't jump right in and start coding Elm. 
 It certainly is emotionally satisfying to do that. However, I have found that when I follow this process I have an easier time building the app, I have a clearer understanding of the app, and I end up producing better Elm code.
 
 Those are all subjective claims that I can't justify to you right at this moment. But, if you decide to join me on this journey through this guide and you make it to the end then maybe you might experience some of what I'm saying.
+
+**N.B.** *I refer to the output of this step in the process as the application.*
 
 ### Deploy
 
