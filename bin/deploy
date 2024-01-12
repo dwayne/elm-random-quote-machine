@@ -66,6 +66,7 @@ branch_name="gh-pages"
 
 src="${build:?}/application"
 
+git -C "$out" pull
 cp -r "$src"/* "$out"
 
 hash="$(git log -n 1 --format='%h' "$current_branch")"
