@@ -6,8 +6,6 @@
 
 set -euo pipefail
 
-project="${project:?}"
-
 fail () {
   echo "$1" >&2
   exit 1

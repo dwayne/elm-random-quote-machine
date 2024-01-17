@@ -58,19 +58,20 @@ echo "Prepared the deploy directory: $out"
 
 branch_name="gh-pages"
 
-[[ $simulate = 0 ]] && git worktree add "$out" "$branch_name"
+if [[ "$simulate" = 0 ]]; then
+  git worktree add "$out" "$branch_name"
+  git -C "$out" pull
+fi
 
 
 # DEPLOY
 
 
 src="${build:?}/application"
-
-git -C "$out" pull
-cp -r "$src"/* "$out"
-
 hash="$(git log -n 1 --format='%h' "$current_branch")"
 message="Site updated to commit $hash from the $current_branch branch"
+
+cp -r "$src"/* "$out"
 
 if [[ "$simulate" != 0 ]]; then
   echo "$message"

@@ -6,4 +6,4 @@
 
 set -euo pipefail
 
-rm -rf "${build:?}" "${project:?}/elm-stuff"
+cd "${project:?}" && rm -rf .build .devbox elm-stuff
